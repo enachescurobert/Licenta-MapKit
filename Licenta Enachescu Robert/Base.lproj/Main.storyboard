@@ -15,42 +15,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lx9-Og-G03">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cw2-oe-Dlc">
-                                        <rect key="frame" x="149" y="384" width="116" height="50"/>
-                                        <state key="normal" title="Activate" image="location"/>
-                                        <connections>
-                                            <action selector="startLocationService:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dGb-z9-Zse"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="cw2-oe-Dlc" firstAttribute="centerY" secondItem="Lx9-Og-G03" secondAttribute="centerY" id="8SM-ML-V0C"/>
-                                    <constraint firstItem="cw2-oe-Dlc" firstAttribute="centerX" secondItem="Lx9-Og-G03" secondAttribute="centerX" id="uSL-mF-Gxa"/>
-                                </constraints>
-                            </view>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xnt-Mn-S5J">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </mapView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="D6x-8f-iv1">
+                                <rect key="frame" x="131.5" y="811" width="151" height="32"/>
+                                <segments>
+                                    <segment title="Standard"/>
+                                    <segment title="Satellite"/>
+                                </segments>
+                                <connections>
+                                    <action selector="changeMapType:" destination="BYZ-38-t0r" eventType="valueChanged" id="cnK-Db-PUu"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Lx9-Og-G03" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="402-2p-MHc"/>
-                            <constraint firstItem="Lx9-Og-G03" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="9Ib-mg-avG"/>
-                            <constraint firstItem="Lx9-Og-G03" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="BBm-YI-8Yb"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Lx9-Og-G03" secondAttribute="bottom" id="KgD-kT-chS"/>
-                            <constraint firstItem="Lx9-Og-G03" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YNb-Ip-IT5"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Lx9-Og-G03" secondAttribute="trailing" id="dbY-KI-BRp"/>
+                            <constraint firstItem="xnt-Mn-S5J" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="8vc-cH-h9i"/>
+                            <constraint firstAttribute="trailing" secondItem="xnt-Mn-S5J" secondAttribute="trailing" id="HCQ-vb-f5c"/>
+                            <constraint firstItem="xnt-Mn-S5J" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="KZn-oG-QSY"/>
+                            <constraint firstAttribute="bottom" secondItem="xnt-Mn-S5J" secondAttribute="bottom" id="Onw-kZ-hag"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="D6x-8f-iv1" secondAttribute="bottom" constant="20" id="RQt-yf-Yzo"/>
+                            <constraint firstItem="D6x-8f-iv1" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="UYF-iL-RWR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="xnt-Mn-S5J" id="Lxu-GR-1KR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="139" y="112"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="location" width="50" height="50"/>
-    </resources>
 </document>
