@@ -1,0 +1,6 @@
+framework module Pods_Licenta_Enachescu_Robert {
+  umbrella header "Pods-Licenta Enachescu Robert-umbrella.h"
+
+  export *
+  module * { export * }
+}

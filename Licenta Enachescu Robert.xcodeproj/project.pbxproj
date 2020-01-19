@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8060A1AFE725700FB892E55A /* Pods_Licenta_Enachescu_Robert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40C0D9E9CFF2458468585EBE /* Pods_Licenta_Enachescu_Robert.framework */; };
 		F65E2CB323D4EB8C00E3299C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65E2CB223D4EB8C00E3299C /* LoginVC.swift */; };
 		F6F0F78823D3891D0077414A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0F78723D3891D0077414A /* AppDelegate.swift */; };
 		F6F0F78A23D3891D0077414A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0F78923D3891D0077414A /* SceneDelegate.swift */; };
@@ -18,6 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1237CE8DF208E2F652534599 /* Pods-Licenta Enachescu Robert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Licenta Enachescu Robert.debug.xcconfig"; path = "Target Support Files/Pods-Licenta Enachescu Robert/Pods-Licenta Enachescu Robert.debug.xcconfig"; sourceTree = "<group>"; };
+		40C0D9E9CFF2458468585EBE /* Pods_Licenta_Enachescu_Robert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Licenta_Enachescu_Robert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6160E0D4263651EBEEADF540 /* Pods-Licenta Enachescu Robert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Licenta Enachescu Robert.release.xcconfig"; path = "Target Support Files/Pods-Licenta Enachescu Robert/Pods-Licenta Enachescu Robert.release.xcconfig"; sourceTree = "<group>"; };
 		F65E2CB223D4EB8C00E3299C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		F6F0F78423D3891D0077414A /* Licenta Enachescu Robert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Licenta Enachescu Robert.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6F0F78723D3891D0077414A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -35,17 +39,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8060A1AFE725700FB892E55A /* Pods_Licenta_Enachescu_Robert.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57ABE3487A88F14595FF597A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				40C0D9E9CFF2458468585EBE /* Pods_Licenta_Enachescu_Robert.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F6F0F77B23D3891D0077414A = {
 			isa = PBXGroup;
 			children = (
 				F6F0F78623D3891D0077414A /* Licenta Enachescu Robert */,
 				F6F0F78523D3891D0077414A /* Products */,
+				FA7DC41B657AD3E14248FF9B /* Pods */,
+				57ABE3487A88F14595FF597A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,6 +88,16 @@
 			path = "Licenta Enachescu Robert";
 			sourceTree = "<group>";
 		};
+		FA7DC41B657AD3E14248FF9B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1237CE8DF208E2F652534599 /* Pods-Licenta Enachescu Robert.debug.xcconfig */,
+				6160E0D4263651EBEEADF540 /* Pods-Licenta Enachescu Robert.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -80,9 +105,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F6F0F79B23D389200077414A /* Build configuration list for PBXNativeTarget "Licenta Enachescu Robert" */;
 			buildPhases = (
+				DE87B60E1F1E7572E4181890 /* [CP] Check Pods Manifest.lock */,
 				F6F0F78023D3891D0077414A /* Sources */,
 				F6F0F78123D3891D0077414A /* Frameworks */,
 				F6F0F78223D3891D0077414A /* Resources */,
+				FC598CFB1BBF806B7DF36474 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -138,6 +165,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DE87B60E1F1E7572E4181890 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Licenta Enachescu Robert-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FC598CFB1BBF806B7DF36474 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Licenta Enachescu Robert/Pods-Licenta Enachescu Robert-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Licenta Enachescu Robert/Pods-Licenta Enachescu Robert-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Licenta Enachescu Robert/Pods-Licenta Enachescu Robert-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F6F0F78023D3891D0077414A /* Sources */ = {
@@ -290,6 +359,7 @@
 		};
 		F6F0F79C23D389200077414A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1237CE8DF208E2F652534599 /* Pods-Licenta Enachescu Robert.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -307,6 +377,7 @@
 		};
 		F6F0F79D23D389200077414A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6160E0D4263651EBEEADF540 /* Pods-Licenta Enachescu Robert.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
