@@ -3,15 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		8060A1AFE725700FB892E55A /* Pods_Licenta_Enachescu_Robert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40C0D9E9CFF2458468585EBE /* Pods_Licenta_Enachescu_Robert.framework */; };
 		F65E2CB323D4EB8C00E3299C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65E2CB223D4EB8C00E3299C /* LoginVC.swift */; };
+		F65E2CB723D4F5AD00E3299C /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65E2CB623D4F5AD00E3299C /* RegisterVC.swift */; };
 		F6F0F78823D3891D0077414A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0F78723D3891D0077414A /* AppDelegate.swift */; };
 		F6F0F78A23D3891D0077414A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0F78923D3891D0077414A /* SceneDelegate.swift */; };
-		F6F0F78C23D3891D0077414A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0F78B23D3891D0077414A /* ViewController.swift */; };
+		F6F0F78C23D3891D0077414A /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0F78B23D3891D0077414A /* MapVC.swift */; };
 		F6F0F78F23D3891D0077414A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6F0F78D23D3891D0077414A /* Main.storyboard */; };
 		F6F0F79223D3891D0077414A /* Licenta_Enachescu_Robert.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F6F0F79023D3891D0077414A /* Licenta_Enachescu_Robert.xcdatamodeld */; };
 		F6F0F79423D389200077414A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6F0F79323D389200077414A /* Assets.xcassets */; };
@@ -23,10 +24,11 @@
 		40C0D9E9CFF2458468585EBE /* Pods_Licenta_Enachescu_Robert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Licenta_Enachescu_Robert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6160E0D4263651EBEEADF540 /* Pods-Licenta Enachescu Robert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Licenta Enachescu Robert.release.xcconfig"; path = "Target Support Files/Pods-Licenta Enachescu Robert/Pods-Licenta Enachescu Robert.release.xcconfig"; sourceTree = "<group>"; };
 		F65E2CB223D4EB8C00E3299C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		F65E2CB623D4F5AD00E3299C /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		F6F0F78423D3891D0077414A /* Licenta Enachescu Robert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Licenta Enachescu Robert.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6F0F78723D3891D0077414A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F6F0F78923D3891D0077414A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F6F0F78B23D3891D0077414A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F6F0F78B23D3891D0077414A /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		F6F0F78E23D3891D0077414A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F6F0F79123D3891D0077414A /* Licenta_Enachescu_Robert.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Licenta_Enachescu_Robert.xcdatamodel; sourceTree = "<group>"; };
 		F6F0F79323D389200077414A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,13 +79,14 @@
 			children = (
 				F6F0F78723D3891D0077414A /* AppDelegate.swift */,
 				F6F0F78923D3891D0077414A /* SceneDelegate.swift */,
-				F6F0F78B23D3891D0077414A /* ViewController.swift */,
+				F6F0F78B23D3891D0077414A /* MapVC.swift */,
 				F6F0F78D23D3891D0077414A /* Main.storyboard */,
 				F6F0F79323D389200077414A /* Assets.xcassets */,
 				F6F0F79523D389200077414A /* LaunchScreen.storyboard */,
 				F6F0F79823D389200077414A /* Info.plist */,
 				F6F0F79023D3891D0077414A /* Licenta_Enachescu_Robert.xcdatamodeld */,
 				F65E2CB223D4EB8C00E3299C /* LoginVC.swift */,
+				F65E2CB623D4F5AD00E3299C /* RegisterVC.swift */,
 			);
 			path = "Licenta Enachescu Robert";
 			sourceTree = "<group>";
@@ -94,7 +97,6 @@
 				1237CE8DF208E2F652534599 /* Pods-Licenta Enachescu Robert.debug.xcconfig */,
 				6160E0D4263651EBEEADF540 /* Pods-Licenta Enachescu Robert.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -214,8 +216,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6F0F79223D3891D0077414A /* Licenta_Enachescu_Robert.xcdatamodeld in Sources */,
-				F6F0F78C23D3891D0077414A /* ViewController.swift in Sources */,
+				F6F0F78C23D3891D0077414A /* MapVC.swift in Sources */,
 				F6F0F78823D3891D0077414A /* AppDelegate.swift in Sources */,
+				F65E2CB723D4F5AD00E3299C /* RegisterVC.swift in Sources */,
 				F6F0F78A23D3891D0077414A /* SceneDelegate.swift in Sources */,
 				F65E2CB323D4EB8C00E3299C /* LoginVC.swift in Sources */,
 			);
