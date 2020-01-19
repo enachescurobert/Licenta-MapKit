@@ -14,8 +14,25 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
+      let rootRef = Database.database().reference()
+      let itemsRef = rootRef.child("Users")
+      let emailRef = itemsRef.child("email")
+      
+      let childRef = Database.database().reference(withPath: "Users") // or:
+      let values = ["email": "testescu@gmail.com",
+                    "eningeStarted": false,
+                    "scooter": false,
+                    "username": "testescu"
+        ] as [String : Any]
+      childRef.setValue(values)
+      
+//      https://www.raywenderlich.com/4203-beginning-firebase/lessons/6
+      print(rootRef.key)
+      print(childRef.key)
+      print(itemsRef.key)
+      print(emailRef.key)
+      
+  }
     
 
     /*
