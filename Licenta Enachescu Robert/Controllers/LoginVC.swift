@@ -24,13 +24,13 @@ class LoginVC: UIViewController {
                     "scooter": false,
                     "username": "testescu"
         ] as [String : Any]
-      childRef.setValue(values)
+//      childRef.setValue(values)
       
 //      https://www.raywenderlich.com/4203-beginning-firebase/lessons/6
-      print(rootRef.key)
-      print(childRef.key)
-      print(itemsRef.key)
-      print(emailRef.key)
+//      print(rootRef.key)
+//      print(childRef.key)
+//      print(itemsRef.key)
+//      print(emailRef.key)
       
   }
     
