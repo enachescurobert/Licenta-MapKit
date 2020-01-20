@@ -17,7 +17,7 @@ struct UserModel {
   let ref: DatabaseReference?
   var engineStarted: Bool
   var scooter: Bool
-
+  
   
   init(email: String, username: String, scooter: Bool, engineStarted: Bool = false, key: String = "") {
     self.key = key
