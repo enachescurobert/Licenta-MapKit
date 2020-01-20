@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import MapKit
+import Firebase
 
 class MapVC: UIViewController {
   
@@ -17,10 +18,47 @@ class MapVC: UIViewController {
   
   // MARK: - Properties
   var locationManager: CLLocationManager?
+  var userItemsReference = Database.database().reference(withPath: "Users")
+  var childName = "Aurelian"
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
+//      MARK: - Upload to Firebase
+        let userRef = self.userItemsReference.child(childName)
+        let values: [String: Any] = ["email": "testescu@gmail.com",
+                                "engineStarted": false,
+                                "scooter": false,
+                                "username": "testescu"
+                    ]
+        userRef.setValue(values)
+        
+//      MARK: - Read from Database
+    //    Getting the entire Object
+        userItemsReference.child(childName).observe(.value, with: {
+          snapshot in
+          print(snapshot)
+        })
+
+    //    Parsing all elements
+        userItemsReference.child(childName).observe(.value, with: {
+          snapshot in
+          let values = snapshot.value as! [String:AnyObject]
+          let email = values["email"] as! String
+          let username = values["username"] as! String
+          let scooter = values["scooter"] as! Bool
+          let engineStarted = values["engineStarted"] as! Bool
+
+          print("email: \(email)")
+          print("username: \(username)")
+          print("is a scooter: \(scooter)")
+          if scooter {
+            print("the engine is on: \(engineStarted)")
+          }
+
+        })
+    
+//    MARK: - Setting the map
     let ourLocation = CLLocation(latitude: 44.410, longitude: 26.100)
     let regionRadius: CLLocationDistance = 25000.0
     let region = MKCoordinateRegion(center: ourLocation.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
@@ -28,6 +66,7 @@ class MapVC: UIViewController {
     
     mapView.delegate = self
 
+//    MARK: - Setting user location
     locationManager = CLLocationManager()
     locationManager?.delegate = self
     locationManager?.desiredAccuracy = kCLLocationAccuracyBest
