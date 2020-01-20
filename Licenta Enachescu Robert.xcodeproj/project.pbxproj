@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8060A1AFE725700FB892E55A /* Pods_Licenta_Enachescu_Robert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40C0D9E9CFF2458468585EBE /* Pods_Licenta_Enachescu_Robert.framework */; };
+		F63C1DEE23D5ADE100C11AA1 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63C1DED23D5ADE100C11AA1 /* UserModel.swift */; };
 		F65E2CB323D4EB8C00E3299C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65E2CB223D4EB8C00E3299C /* LoginVC.swift */; };
 		F65E2CB723D4F5AD00E3299C /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65E2CB623D4F5AD00E3299C /* RegisterVC.swift */; };
 		F65E2CC523D500A600E3299C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F65E2CC423D500A600E3299C /* GoogleService-Info.plist */; };
@@ -24,6 +25,7 @@
 		1237CE8DF208E2F652534599 /* Pods-Licenta Enachescu Robert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Licenta Enachescu Robert.debug.xcconfig"; path = "Target Support Files/Pods-Licenta Enachescu Robert/Pods-Licenta Enachescu Robert.debug.xcconfig"; sourceTree = "<group>"; };
 		40C0D9E9CFF2458468585EBE /* Pods_Licenta_Enachescu_Robert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Licenta_Enachescu_Robert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6160E0D4263651EBEEADF540 /* Pods-Licenta Enachescu Robert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Licenta Enachescu Robert.release.xcconfig"; path = "Target Support Files/Pods-Licenta Enachescu Robert/Pods-Licenta Enachescu Robert.release.xcconfig"; sourceTree = "<group>"; };
+		F63C1DED23D5ADE100C11AA1 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		F65E2CB223D4EB8C00E3299C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		F65E2CB623D4F5AD00E3299C /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		F65E2CC423D500A600E3299C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				F6F0F79023D3891D0077414A /* Licenta_Enachescu_Robert.xcdatamodeld */,
+				F63C1DED23D5ADE100C11AA1 /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6F0F79223D3891D0077414A /* Licenta_Enachescu_Robert.xcdatamodeld in Sources */,
+				F63C1DEE23D5ADE100C11AA1 /* UserModel.swift in Sources */,
 				F6F0F78C23D3891D0077414A /* MapVC.swift in Sources */,
 				F6F0F78823D3891D0077414A /* AppDelegate.swift in Sources */,
 				F65E2CB723D4F5AD00E3299C /* RegisterVC.swift in Sources */,
