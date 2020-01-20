@@ -10,39 +10,47 @@ import UIKit
 import Firebase
 
 class LoginVC: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-      let rootRef = Database.database().reference()
-      let itemsRef = rootRef.child("Users")
-      let emailRef = itemsRef.child("email")
-      
-      let childRef = Database.database().reference(withPath: "Users") // or:
-      let values = ["email": "testescu@gmail.com",
-                    "eningeStarted": false,
-                    "scooter": false,
-                    "username": "testescu"
-        ] as [String : Any]
-//      childRef.setValue(values)
-      
-//      https://www.raywenderlich.com/4203-beginning-firebase/lessons/6
-//      print(rootRef.key)
-//      print(childRef.key)
-//      print(itemsRef.key)
-//      print(emailRef.key)
-      
-  }
+  
+  // MARK: - Properties
+  var userItemsReference = Database.database().reference(withPath: "Users")
+  
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    //      MARK: - Upload to Firebase
+//          let childRef = Database.database().reference(withPath: "Users")
+//          let values = ["email": "testescu@gmail.com",
+//                        "engineStarted": false,
+//                        "scooter": false,
+//                        "username": "testescu"
+//            ] as [String : Any]
+//
+//          childRef.setValue(values)
+    
+    //      MARK: - Read from Database
+    userItemsReference.observe(.value, with: {
+      snapshot in
+      let values = snapshot.value as! [String:AnyObject]
+      let email = values["email"] as! String
+      let username = values["username"] as! String
+      let scooter = values["scooter"] as! Bool
+      let engineStarted = values["engineStarted"] as! Bool
+      
+      print("email: \(email)")
+      print("username: \(username)")
+      print("is a scooter: \(scooter)")
+      if scooter {
+        print("the engine is on: \(engineStarted)")
+      }
+      
+    })
+    
+//    userItemsReference.child("email").observe(.value, with: {
+//      snapshot in
+//      print(snapshot)
+//    })
+    
+  }
+  
 }

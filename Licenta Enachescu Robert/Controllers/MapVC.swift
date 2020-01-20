@@ -15,6 +15,7 @@ class MapVC: UIViewController {
   // MARK: - IBOutlets
   @IBOutlet weak var mapView: MKMapView!
   
+  // MARK: - Properties
   var locationManager: CLLocationManager?
   
   override func viewDidLoad() {
