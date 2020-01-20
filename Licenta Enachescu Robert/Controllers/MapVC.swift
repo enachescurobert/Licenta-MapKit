@@ -72,12 +72,27 @@ class MapVC: UIViewController {
       //      print("Users: \(self.users)")
     })
     
+//    MARK: - Querying Firebase
+    userItemsReference.queryOrdered(byChild: "scooter").observe(.value, with: {
+      snapshot in
+      var newUsers: [UserModel] = []
+      for user in snapshot.children {
+        let userItem = UserModel(snapshot: user as! DataSnapshot)
+        newUsers.append(userItem)
+      }
+      
+      self.users = newUsers
+    })
+    
 //    MARK: - Updating Firebase
-    let valuesToUpdate:[String: Any] = ["email":"aurelian@gmail.com"]
+    let valuesToUpdate:[String: Any] = ["email":"MUIE@gmail.com"]
     userItemsReference.child(childName).ref.updateChildValues(valuesToUpdate)
     
 //    MARK: - Deleting the Firebase reference
+    //Deleting by using removeValue
     userItemsReference.child("Robert").ref.removeValue()
+    //If we'll set a nil value, it will be deleted
+    userItemsReference.child("Robert").setValue(nil)
     
 //    MARK: - Setting the map
     let ourLocation = CLLocation(latitude: 44.410, longitude: 26.100)

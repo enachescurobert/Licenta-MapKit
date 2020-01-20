@@ -26,6 +26,7 @@
 		40C0D9E9CFF2458468585EBE /* Pods_Licenta_Enachescu_Robert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Licenta_Enachescu_Robert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6160E0D4263651EBEEADF540 /* Pods-Licenta Enachescu Robert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Licenta Enachescu Robert.release.xcconfig"; path = "Target Support Files/Pods-Licenta Enachescu Robert/Pods-Licenta Enachescu Robert.release.xcconfig"; sourceTree = "<group>"; };
 		F63C1DED23D5ADE100C11AA1 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		F63C1DEF23D64A2C00C11AA1 /* Licenta Enachescu Robert.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Licenta Enachescu Robert.entitlements"; sourceTree = "<group>"; };
 		F65E2CB223D4EB8C00E3299C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		F65E2CB623D4F5AD00E3299C /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		F65E2CC423D500A600E3299C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -127,6 +128,7 @@
 		F6F0F78623D3891D0077414A /* Licenta Enachescu Robert */ = {
 			isa = PBXGroup;
 			children = (
+				F63C1DEF23D64A2C00C11AA1 /* Licenta Enachescu Robert.entitlements */,
 				F65E2CBC23D4FA9500E3299C /* Models */,
 				F65E2CBD23D4FA9F00E3299C /* Controllers */,
 				F65E2CBF23D4FB0000E3299C /* Storyboards */,
@@ -413,6 +415,7 @@
 			baseConfigurationReference = 1237CE8DF208E2F652534599 /* Pods-Licenta Enachescu Robert.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Licenta Enachescu Robert/Licenta Enachescu Robert.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "Licenta Enachescu Robert/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -431,6 +434,7 @@
 			baseConfigurationReference = 6160E0D4263651EBEEADF540 /* Pods-Licenta Enachescu Robert.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Licenta Enachescu Robert/Licenta Enachescu Robert.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "Licenta Enachescu Robert/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
