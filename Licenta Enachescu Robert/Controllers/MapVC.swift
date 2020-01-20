@@ -25,7 +25,7 @@ class MapVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    //      MARK: - Upload to Firebase
+//      MARK: - Upload to Firebase
     let userRef = self.userItemsReference.child(childName)
     let values: [String: Any] = ["email": "testescu@gmail.com",
                                  "engineStarted": false,
@@ -34,7 +34,7 @@ class MapVC: UIViewController {
     ]
     userRef.setValue(values)
     
-    //      MARK: - Read from Database
+//      MARK: - Read from Database
     //    Getting the entire Object
     userItemsReference.child(childName).observe(.value, with: {
       snapshot in
@@ -72,7 +72,14 @@ class MapVC: UIViewController {
       //      print("Users: \(self.users)")
     })
     
-    //    MARK: - Setting the map
+//    MARK: - Updating Firebase
+    let valuesToUpdate:[String: Any] = ["email":"aurelian@gmail.com"]
+    userItemsReference.child(childName).ref.updateChildValues(valuesToUpdate)
+    
+//    MARK: - Deleting the Firebase reference
+    userItemsReference.child("Robert").ref.removeValue()
+    
+//    MARK: - Setting the map
     let ourLocation = CLLocation(latitude: 44.410, longitude: 26.100)
     let regionRadius: CLLocationDistance = 25000.0
     let region = MKCoordinateRegion(center: ourLocation.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
