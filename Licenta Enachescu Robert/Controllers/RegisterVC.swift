@@ -46,8 +46,17 @@ class RegisterVC: UIViewController {
       Auth.auth().createUser(withEmail: emailTF.text!, password: passwordTF.text!) {
         authDataResult, error in
         if error != nil {
-          print(error?.localizedDescription ?? "Error")
-          self.showAlert(titleToShow: "ERROR", messageToShow: "Error: \(error?.localizedDescription ?? "error")")
+          if let errorCode = AuthErrorCode(rawValue: error!._code) {
+            switch errorCode {
+            case .weakPassword:
+              print("Please provice a strong password")
+              self.showAlert(titleToShow: "ERROR", messageToShow: "Please provide a strong password")
+            default:
+              print(error?.localizedDescription ?? "Error")
+              self.showAlert(titleToShow: "ERROR", messageToShow: "Error: \(error?.localizedDescription ?? "error")")
+            }
+            
+          }
         }
         if authDataResult != nil {
           authDataResult?.user.sendEmailVerification() {
