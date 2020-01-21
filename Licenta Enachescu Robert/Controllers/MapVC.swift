@@ -25,6 +25,9 @@ class MapVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    self.navigationItem.hidesBackButton = true
+//    self.navigationController?.setNavigationBarHidden(true, animated: false)
+    
 //      MARK: - Upload to Firebase
     let userRef = self.userItemsReference.child(childName)
     let values: [String: Any] = ["email": "testescu@gmail.com",
