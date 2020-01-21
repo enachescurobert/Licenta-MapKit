@@ -36,7 +36,8 @@
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
                                         <connections>
-                                            <segue destination="BYZ-38-t0r" kind="show" id="TNI-qs-Tgy"/>
+                                            <action selector="loginDidTouch:" destination="Wzg-rr-izg" eventType="touchUpInside" id="uTY-EK-K2o"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" identifier="loginToMap" id="TNI-qs-Tgy"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xyf-SC-pYi">
@@ -68,6 +69,10 @@
                         <viewLayoutGuide key="safeArea" id="bFK-8C-qci"/>
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="ZPO-34-DGq"/>
+                    <connections>
+                        <outlet property="loginTF" destination="dDK-a5-zA5" id="kRD-1k-eTN"/>
+                        <outlet property="passwordTF" destination="Nzs-zb-ZFg" id="xLb-dJ-qLD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yZL-9E-OXp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -114,6 +119,7 @@
                                         </state>
                                         <connections>
                                             <action selector="register:" destination="fA7-Rr-qMJ" eventType="touchUpInside" id="fMc-r3-21M"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" identifier="goToMap" id="XEw-zL-kjD"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -185,7 +191,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xzT-Fn-aJy"/>
+                    <navigationItem key="navigationItem" id="pp7-eG-UAM"/>
                     <connections>
                         <outlet property="mapView" destination="xnt-Mn-S5J" id="Lxu-GR-1KR"/>
                     </connections>
@@ -213,4 +219,7 @@
             <point key="canvasLocation" x="-797.10144927536237" y="120.53571428571428"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="TNI-qs-Tgy"/>
+    </inferredMetricsTieBreakers>
 </document>

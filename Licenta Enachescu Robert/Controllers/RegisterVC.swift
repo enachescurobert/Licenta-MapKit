@@ -17,6 +17,9 @@ class RegisterVC: UIViewController {
   @IBOutlet weak var passwordTF: UITextField!
   @IBOutlet weak var confirmPasswordTF: UITextField!
   
+  //  MARK: - Properties
+  let goToMap = "goToMap"
+  
   //  MARK: - Lifecycle Methods
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -33,18 +36,9 @@ class RegisterVC: UIViewController {
       showAlert(titleToShow: "Error", messageToShow: "Passwords did not match.")
     } else {
       
-      Auth.auth().createUser(withEmail: emailTF.text!, password: passwordTF.text!, completion: {
-        user, error in
-        if error != nil {
-          self.showAlert(titleToShow: "ERROR", messageToShow: "Error: \(error?.localizedDescription ?? "error")")
-        }
-        if user != nil {
-
-        }
-      })
-      
       Auth.auth().createUser(withEmail: emailTF.text!, password: passwordTF.text!) {
         authDataResult, error in
+        
         if error != nil {
           if let errorCode = AuthErrorCode(rawValue: error!._code) {
             switch errorCode {
@@ -58,19 +52,22 @@ class RegisterVC: UIViewController {
             
           }
         }
+        
         if authDataResult != nil {
           authDataResult?.user.sendEmailVerification() {
             error in
-          self.showAlert(titleToShow: "ERROR", messageToShow: "Error: \(error?.localizedDescription ?? "error")")
+            if error != nil {
+              self.showAlert(titleToShow: "ERROR", messageToShow: "Error: \(error?.localizedDescription ?? "error")")
+            } else {
+              Auth.auth().signIn(withEmail: self.emailTF.text!, password: self.passwordTF.text!)
+              self.showAlert(titleToShow: "Done", messageToShow: "You will receive an confirmation email soon. You'll have limited access for now.")
+                //  TODO: - Perform Segue
+            }
           }
         }
-        if !(authDataResult?.user.isEmailVerified ?? false) {
-          self.showAlert(titleToShow: "Done", messageToShow: "You will receive an confirmation email soon")
-        }
+        
       }
-      
     }
-    
   }
   
   fileprivate func showAlert(titleToShow: String, messageToShow: String) {
@@ -82,7 +79,4 @@ class RegisterVC: UIViewController {
     self.present(alert, animated: true, completion: nil)
     
   }
-  
-  
-  
 }
