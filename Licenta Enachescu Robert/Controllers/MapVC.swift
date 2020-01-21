@@ -126,6 +126,16 @@ class MapVC: UIViewController {
     }
   }
   
+  @IBAction func signOut(_ sender: Any) {
+    do {
+        try Auth.auth().signOut()
+      self.navigationController?.popViewController(animated: true)
+        } catch let err {
+            print(err)
+    }
+  }
+  
+  
   // MARK: - Methods
   func startLocationService() {
     locationManager?.requestAlwaysAuthorization()

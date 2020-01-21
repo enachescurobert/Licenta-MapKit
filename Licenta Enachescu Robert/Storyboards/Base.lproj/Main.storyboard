@@ -191,7 +191,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="pp7-eG-UAM"/>
+                    <navigationItem key="navigationItem" id="pp7-eG-UAM">
+                        <barButtonItem key="rightBarButtonItem" title="Sign out" id="GVk-Gm-uCO">
+                            <connections>
+                                <action selector="signOut:" destination="BYZ-38-t0r" id="axU-bo-uva"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="xnt-Mn-S5J" id="Lxu-GR-1KR"/>
                     </connections>
