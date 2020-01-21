@@ -19,8 +19,10 @@ class MapVC: UIViewController {
   // MARK: - Properties
   var locationManager: CLLocationManager?
   var userItemsReference = Database.database().reference(withPath: "Users")
+  var onlineUsersReference = Database.database().reference(withPath: "Online")
   var childName = "Aurelian"
   var users: [UserModel] = []
+  var user: User!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -114,6 +116,16 @@ class MapVC: UIViewController {
     
     
     startLocationService()
+    
+    Auth.auth().addStateDidChangeListener {
+      auth, user in
+      if let user = user {
+        self.user = User(uid: user.uid, email: user.email!)
+        let currentUserReference = self.onlineUsersReference.child(self.user.uid)
+        currentUserReference.setValue(self.user.email)
+        currentUserReference.onDisconnectRemoveValue()
+      }
+    }
     
   }
   
