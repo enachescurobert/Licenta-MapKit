@@ -15,6 +15,7 @@ class MapVC: UIViewController {
   
   // MARK: - IBOutlets
   @IBOutlet weak var mapView: MKMapView!
+  @IBOutlet weak var onlineUsersCount: UIBarButtonItem!
   
   // MARK: - Properties
   var locationManager: CLLocationManager?
@@ -126,6 +127,15 @@ class MapVC: UIViewController {
         currentUserReference.onDisconnectRemoveValue()
       }
     }
+    
+    onlineUsersReference.observe(.value, with: {
+      snapshot in
+      if snapshot.exists() {
+        self.onlineUsersCount?.title = "Online users: \(snapshot.childrenCount.description)"
+      } else {
+        self.onlineUsersCount?.title = "0 online users"
+      }
+    })
     
   }
   

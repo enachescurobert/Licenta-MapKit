@@ -192,14 +192,18 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="pp7-eG-UAM">
-                        <barButtonItem key="rightBarButtonItem" title="Sign out" id="GVk-Gm-uCO">
-                            <connections>
-                                <action selector="signOut:" destination="BYZ-38-t0r" id="axU-bo-uva"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Sign out" id="GVk-Gm-uCO">
+                                <connections>
+                                    <action selector="signOut:" destination="BYZ-38-t0r" id="axU-bo-uva"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem enabled="NO" title="Online Users" id="nDm-kg-hU7"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="xnt-Mn-S5J" id="Lxu-GR-1KR"/>
+                        <outlet property="onlineUsersCount" destination="nDm-kg-hU7" id="5Z8-Tk-QU3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -209,7 +213,6 @@
         <!--Navigation Controller-->
         <scene sceneID="H5Z-pv-eZJ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sse-eg-err" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xo9-DE-46t" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="21w-IP-F7G">
@@ -221,6 +224,7 @@
                         <segue destination="Wzg-rr-izg" kind="relationship" relationship="rootViewController" id="cne-yT-VSV"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sse-eg-err" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-797.10144927536237" y="120.53571428571428"/>
         </scene>
