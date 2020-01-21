@@ -60,8 +60,9 @@ class RegisterVC: UIViewController {
               self.showAlert(titleToShow: "ERROR", messageToShow: "Error: \(error?.localizedDescription ?? "error")")
             } else {
               Auth.auth().signIn(withEmail: self.emailTF.text!, password: self.passwordTF.text!)
-              self.showAlert(titleToShow: "Done", messageToShow: "You will receive an confirmation email soon. You'll have limited access for now.")
-                //  TODO: - Perform Segue
+              
+              self.showAlert(titleToShow: "Done", messageToShow: "You will receive an confirmation email soon. You'll have limited access for now.", performTheSegue: true)
+
             }
           }
         }
@@ -79,4 +80,18 @@ class RegisterVC: UIViewController {
     self.present(alert, animated: true, completion: nil)
     
   }
+  
+  fileprivate func showAlert(titleToShow: String, messageToShow: String, performTheSegue: Bool) {
+    
+    let alert = UIAlertController(title: titleToShow, message: messageToShow, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+      if performTheSegue {
+        self.performSegue(withIdentifier: self.goToMap, sender: nil)
+      }
+    }))
+    self.present(alert, animated: true, completion: nil)
+    
+  }
+
+  
 }

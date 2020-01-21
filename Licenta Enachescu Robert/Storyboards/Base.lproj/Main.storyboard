@@ -119,7 +119,6 @@
                                         </state>
                                         <connections>
                                             <action selector="register:" destination="fA7-Rr-qMJ" eventType="touchUpInside" id="fMc-r3-21M"/>
-                                            <segue destination="BYZ-38-t0r" kind="show" identifier="goToMap" id="XEw-zL-kjD"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -152,6 +151,7 @@
                         <outlet property="confirmPasswordTF" destination="lZP-0m-RU1" id="tDi-NK-fAs"/>
                         <outlet property="emailTF" destination="R38-i0-RKI" id="uml-Sc-Oze"/>
                         <outlet property="passwordTF" destination="DWu-JS-zIu" id="l7O-IY-Muh"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="goToMap" id="cSg-rr-edi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORa-KF-IQt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -220,6 +220,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="TNI-qs-Tgy"/>
+        <segue reference="cSg-rr-edi"/>
     </inferredMetricsTieBreakers>
 </document>
