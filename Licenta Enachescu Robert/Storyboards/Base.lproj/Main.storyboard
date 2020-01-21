@@ -37,7 +37,6 @@
                                         </state>
                                         <connections>
                                             <action selector="loginDidTouch:" destination="Wzg-rr-izg" eventType="touchUpInside" id="uTY-EK-K2o"/>
-                                            <segue destination="BYZ-38-t0r" kind="show" identifier="loginToMap" id="TNI-qs-Tgy"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xyf-SC-pYi">
@@ -72,6 +71,7 @@
                     <connections>
                         <outlet property="loginTF" destination="dDK-a5-zA5" id="kRD-1k-eTN"/>
                         <outlet property="passwordTF" destination="Nzs-zb-ZFg" id="xLb-dJ-qLD"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="loginToMap" id="qMh-Ab-Caf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yZL-9E-OXp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -220,6 +220,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cSg-rr-edi"/>
+        <segue reference="qMh-Ab-Caf"/>
     </inferredMetricsTieBreakers>
 </document>

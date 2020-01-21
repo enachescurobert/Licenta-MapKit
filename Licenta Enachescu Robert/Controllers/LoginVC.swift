@@ -27,7 +27,7 @@ class LoginVC: UIViewController {
     let listener = Auth.auth().addStateDidChangeListener{
       auth, user in
       if user != nil {
-//        self.performSegue(withIdentifier: self.loginToMap, sender: nil)
+        self.performSegue(withIdentifier: self.loginToMap, sender: nil)
       }
     }
     Auth.auth().removeStateDidChangeListener(listener)
@@ -38,8 +38,17 @@ class LoginVC: UIViewController {
     if loginTF.text == "" || passwordTF.text == "" {
       showAlert(titleToShow: "Error", messageToShow: "You must fill out all fields")
     } else {
-    Auth.auth().signIn(withEmail: loginTF.text!, password: passwordTF.text!)
-      performSegue(withIdentifier: loginToMap, sender: nil)
+      Auth.auth().signIn(withEmail: loginTF.text!, password: passwordTF.text!, completion: {
+        authDataResult, error in
+        if error != nil {
+          self.showAlert(titleToShow: "Error", messageToShow: "Error: \(error?.localizedDescription ?? "error")")
+        }
+        
+        if authDataResult != nil {
+          self.performSegue(withIdentifier: self.loginToMap, sender: nil)
+        }
+        
+      })
     }
   }
   
