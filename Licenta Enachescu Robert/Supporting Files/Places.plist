@@ -16,9 +16,9 @@
 		<key>Name</key>
 		<string>Scooter 2</string>
 		<key>Latitude</key>
-		<real>44.485</real>
+		<real>44.48066</real>
 		<key>Longitude</key>
-		<real>26.114</real>
+		<real>26.11528</real>
 		<key>Image</key>
 		<string>location.png</string>
 	</dict>
@@ -26,9 +26,9 @@
 		<key>Name</key>
 		<string>Scooter 3</string>
 		<key>Latitude</key>
-		<real>44.49</real>
+		<real>44.49253</real>
 		<key>Longitude</key>
-		<real>26.1145</real>
+		<real>26.11451</real>
 		<key>Image</key>
 		<string>location.png</string>
 	</dict>
@@ -36,9 +36,9 @@
 		<key>Name</key>
 		<string>Scooter 4</string>
 		<key>Latitude</key>
-		<real>44.45</real>
+		<real>44.45321</real>
 		<key>Longitude</key>
-		<real>26.114</real>
+		<real>26.11421</real>
 		<key>Image</key>
 		<string>location.png</string>
 	</dict>

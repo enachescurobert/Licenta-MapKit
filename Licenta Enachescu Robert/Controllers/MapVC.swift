@@ -26,6 +26,7 @@ class MapVC: UIViewController {
   var users: [UserModel] = []
   var user: User!
   var scooters:[ScooterModel] = []
+  lazy var geocoder = CLGeocoder()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -101,9 +102,7 @@ class MapVC: UIViewController {
     userItemsReference.child("Robert").ref.removeValue()
     //If we'll set a nil value, it will be deleted
     userItemsReference.child("Robert").setValue(nil)
-        
-    loadScooters()
-    
+            
 //    MARK: - Setting the map
     let ourLocation = CLLocation(latitude: 44.410, longitude: 26.100)
     let regionRadius: CLLocationDistance = 25000.0
@@ -118,11 +117,14 @@ class MapVC: UIViewController {
     locationManager?.allowsBackgroundLocationUpdates = true
     locationManager?.requestLocation()
     
+    updateUI()
+    
     if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
       activateLocationServices()
     } else {
       startLocationService()
     }
+    
     Auth.auth().addStateDidChangeListener {
       auth, user in
       if let user = user {
@@ -177,6 +179,11 @@ class MapVC: UIViewController {
     locationManager?.startUpdatingLocation()
   }
   
+  func updateUI() {
+    loadScooters()
+    printAddress()
+  }
+  
   func loadScooters() {
     guard let entries = loadPlist() else {
       fatalError("Unable to load data")
@@ -198,6 +205,30 @@ class MapVC: UIViewController {
       let scooter = ScooterModel(latitude: latitude.doubleValue, longitude: longitude.doubleValue, name: name, imageName: image)
       scooters.append(scooter)
     }
+  }
+  
+  private func printAddress() {
+    
+    for scooter in scooters {
+      geocoder.reverseGeocodeLocation(scooter.location, completionHandler: {
+        [weak self](placemarks, error) in
+        if let error = error {
+          print(error.localizedDescription)
+          return
+        }
+        guard let placemark = placemarks?.first else {
+          return
+        }
+        let streetNumber = placemark.subThoroughfare ?? ""
+        if let street = placemark.thoroughfare,
+          let city = placemark.locality,
+          let state = placemark.administrativeArea {
+          print("The address is: \(streetNumber) \(street) \(city), \(state)")
+        }
+        
+      })
+    }
+    
   }
   
   private func loadPlist() -> [[String: Any]]? {
