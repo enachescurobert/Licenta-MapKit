@@ -67,10 +67,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F65E2CBC23D4FA9500E3299C /* Models */ = {
+		F620428823D8848E00922A22 /* CoreDataModel */ = {
 			isa = PBXGroup;
 			children = (
 				F6F0F79023D3891D0077414A /* Licenta_Enachescu_Robert.xcdatamodeld */,
+			);
+			path = CoreDataModel;
+			sourceTree = "<group>";
+		};
+		F65E2CBC23D4FA9500E3299C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F620428823D8848E00922A22 /* CoreDataModel */,
 				F63C1DED23D5ADE100C11AA1 /* UserModel.swift */,
 				F6889A8923D74AA50068EF01 /* User.swift */,
 				F620428423D87F3A00922A22 /* ScooterModel.swift */,

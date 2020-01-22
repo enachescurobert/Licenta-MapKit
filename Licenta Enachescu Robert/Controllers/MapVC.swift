@@ -43,13 +43,13 @@ class MapVC: UIViewController {
     userRef.setValue(values)
     
 //      MARK: - Read from Database
-    //    Getting the entire Object
+    ///    Getting the entire Object
     userItemsReference.child(childName).observe(.value, with: {
       snapshot in
       print(snapshot)
     })
     
-    //    Parsing all elements
+    ///    Parsing all elements
     userItemsReference.child(childName).observe(.value, with: {
       snapshot in
       let values = snapshot.value as! [String:AnyObject]
@@ -67,7 +67,7 @@ class MapVC: UIViewController {
       
     })
     
-    //    Creating an array of Users
+    ///    Creating an array of Users
     userItemsReference.observe(.value, with: {
       snapshot in
       var newUsers: [UserModel] = []
@@ -167,6 +167,8 @@ class MapVC: UIViewController {
   }
   
   // MARK: - Methods
+  /// We use requestAlwaysAuthorization instead of requestWhenInUseAuthorization
+  /// because we need the location of the user even if the app is in background
   func startLocationService() {
     locationManager?.requestAlwaysAuthorization()
   }
