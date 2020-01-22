@@ -3,6 +3,8 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>shouldBeOnTopOfCluster</key>
+		<true/>
 		<key>Name</key>
 		<string>Scooter 1</string>
 		<key>Latitude</key>
@@ -13,6 +15,8 @@
 		<string>location.png</string>
 	</dict>
 	<dict>
+		<key>shouldBeOnTopOfCluster</key>
+		<false/>
 		<key>Name</key>
 		<string>Scooter 2</string>
 		<key>Latitude</key>
@@ -33,6 +37,8 @@
 		<string>location.png</string>
 	</dict>
 	<dict>
+		<key>shouldBeOnTopOfCluster</key>
+		<true/>
 		<key>Name</key>
 		<string>Scooter 4</string>
 		<key>Latitude</key>
