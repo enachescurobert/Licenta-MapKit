@@ -8,8 +8,9 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
-class ScooterModel {
+class ScooterModel: NSObject {
   
   let location: CLLocation
   let name: String
@@ -19,6 +20,22 @@ class ScooterModel {
     self.location = CLLocation(latitude: latitude, longitude: longitude)
     self.name = name
     self.imageName = imageName
+  }
+  
+}
+
+extension ScooterModel: MKAnnotation {
+  
+  var coordinate: CLLocationCoordinate2D {
+    get {
+      return location.coordinate
+    }
+  }
+  
+  var title: String? {
+    get {
+      return name
+    }
   }
   
 }
