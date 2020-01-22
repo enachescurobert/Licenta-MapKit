@@ -19,6 +19,7 @@ class MapVC: UIViewController {
   
   // MARK: - Properties
   var locationManager: CLLocationManager?
+  var previousLocation: CLLocation?
   var userItemsReference = Database.database().reference(withPath: "Users")
   var onlineUsersReference = Database.database().reference(withPath: "Online")
   var childName = "Aurelian"
@@ -105,7 +106,6 @@ class MapVC: UIViewController {
     let regionRadius: CLLocationDistance = 25000.0
     let region = MKCoordinateRegion(center: ourLocation.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
     mapView.setRegion(region, animated: true)
-    
     mapView.delegate = self
     
     //    MARK: - Setting user location
@@ -115,9 +115,11 @@ class MapVC: UIViewController {
     locationManager?.allowsBackgroundLocationUpdates = true
     locationManager?.requestLocation()
     
-    
-    startLocationService()
-    
+    if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+      activateLocationServices()
+    } else {
+      startLocationService()
+    }
     Auth.auth().addStateDidChangeListener {
       auth, user in
       if let user = user {
@@ -157,10 +159,17 @@ class MapVC: UIViewController {
     }
   }
   
+  @IBAction func goToUserLocation(_ sender: Any) {
+        mapView.setCenter(mapView?.userLocation.coordinate ?? CLLocationCoordinate2DMake(44.410, 26.100), animated: true)
+  }
   
   // MARK: - Methods
   func startLocationService() {
     locationManager?.requestAlwaysAuthorization()
+  }
+  
+  func activateLocationServices() {
+    locationManager?.startUpdatingLocation()
   }
   
 }
@@ -168,10 +177,24 @@ class MapVC: UIViewController {
 //  MARK: - CoreLocation Delegate methods
 extension MapVC: CLLocationManagerDelegate {
   
+  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    
+    if status == .authorizedWhenInUse || status == .authorizedAlways {
+      activateLocationServices()
+    }
+    
+  }
+  
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     
-    guard let initialLocation = locations.first else {return}
-    print("The initial location is: \(initialLocation)")
+    if previousLocation == nil {
+      previousLocation = locations.first
+    } else {
+      guard let latest = locations.first else {return}
+      let distanceInMeters = previousLocation?.distance(from: latest) ?? 0
+      print("distance in meters: \(distanceInMeters)")
+      previousLocation = latest
+    }
     
   }
   

@@ -179,11 +179,22 @@
                                     <action selector="changeMapType:" destination="BYZ-38-t0r" eventType="valueChanged" id="cnK-Db-PUu"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IG6-bx-7YP">
+                                <rect key="frame" x="364" y="822.5" width="20" height="19"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" backgroundImage="person.crop.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="goToUserLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="14y-i3-Dva"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="IG6-bx-7YP" secondAttribute="bottom" constant="20" id="0Gb-hK-tET"/>
                             <constraint firstItem="xnt-Mn-S5J" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="8vc-cH-h9i"/>
                             <constraint firstAttribute="trailing" secondItem="xnt-Mn-S5J" secondAttribute="trailing" id="HCQ-vb-f5c"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IG6-bx-7YP" secondAttribute="trailing" constant="30" id="K46-0o-LWC"/>
                             <constraint firstItem="xnt-Mn-S5J" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="KZn-oG-QSY"/>
                             <constraint firstAttribute="bottom" secondItem="xnt-Mn-S5J" secondAttribute="bottom" id="Onw-kZ-hag"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="D6x-8f-iv1" secondAttribute="bottom" constant="20" id="RQt-yf-Yzo"/>
@@ -229,6 +240,9 @@
             <point key="canvasLocation" x="-797.10144927536237" y="120.53571428571428"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="person.crop.circle" catalog="system" width="64" height="60"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="cSg-rr-edi"/>
     </inferredMetricsTieBreakers>
