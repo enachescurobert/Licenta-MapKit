@@ -91,7 +91,7 @@ class MapVC: UIViewController {
     })
     
 //    MARK: - Updating Firebase
-    let valuesToUpdate:[String: Any] = ["email":"MUIE@gmail.com"]
+    let valuesToUpdate:[String: Any] = ["email":"updated_email@gmail.com"]
     userItemsReference.child(childName).ref.updateChildValues(valuesToUpdate)
     
 //    MARK: - Deleting the Firebase reference
