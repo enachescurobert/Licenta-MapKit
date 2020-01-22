@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Name</key>
+		<string>Scooter 1</string>
+		<key>Latitude</key>
+		<real>44.48066</real>
+		<key>Longitude</key>
+		<real>26.11528</real>
+		<key>Image</key>
+		<string>location.png</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Scooter 2</string>
+		<key>Latitude</key>
+		<real>44.485</real>
+		<key>Longitude</key>
+		<real>26.114</real>
+		<key>Image</key>
+		<string>location.png</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Scooter 3</string>
+		<key>Latitude</key>
+		<real>44.49</real>
+		<key>Longitude</key>
+		<real>26.1145</real>
+		<key>Image</key>
+		<string>location.png</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Scooter 4</string>
+		<key>Latitude</key>
+		<real>44.45</real>
+		<key>Longitude</key>
+		<real>26.114</real>
+		<key>Image</key>
+		<string>location.png</string>
+	</dict>
+</array>
+</plist>

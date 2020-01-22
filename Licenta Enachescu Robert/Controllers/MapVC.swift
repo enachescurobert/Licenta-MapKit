@@ -19,16 +19,17 @@ class MapVC: UIViewController {
   
   // MARK: - Properties
   var locationManager: CLLocationManager?
-  var previousLocation: CLLocation?
+  var currentLocation: CLLocation?
   var userItemsReference = Database.database().reference(withPath: "Users")
   var onlineUsersReference = Database.database().reference(withPath: "Online")
   var childName = "Aurelian"
   var users: [UserModel] = []
   var user: User!
+  var scooters:[ScooterModel] = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+        
     self.navigationItem.hidesBackButton = true
 //    self.navigationController?.setNavigationBarHidden(true, animated: false)
     
@@ -100,6 +101,8 @@ class MapVC: UIViewController {
     userItemsReference.child("Robert").ref.removeValue()
     //If we'll set a nil value, it will be deleted
     userItemsReference.child("Robert").setValue(nil)
+        
+    loadScooters()
     
 //    MARK: - Setting the map
     let ourLocation = CLLocation(latitude: 44.410, longitude: 26.100)
@@ -172,6 +175,42 @@ class MapVC: UIViewController {
     locationManager?.startUpdatingLocation()
   }
   
+  func loadScooters() {
+    guard let entries = loadPlist() else {
+      fatalError("Unable to load data")
+    }
+    
+    for property in entries {
+      guard let name = property["Name"] as? String,
+            let latitude = property["Latitude"] as? NSNumber,
+            let longitude = property["Longitude"] as? NSNumber,
+        let image = property["Image"] as? String else {
+          fatalError("Error reading data")
+      }
+      print("name: \(name)")
+      print("latitude: \(latitude)")
+      print("longitude: \(longitude)")
+      print("image: \(image)")
+      print("")
+      
+      let scooter = ScooterModel(latitude: latitude.doubleValue, longitude: longitude.doubleValue, name: name, imageName: image)
+      scooters.append(scooter)
+    }
+  }
+  
+  private func loadPlist() -> [[String: Any]]? {
+    guard let plistUrl = Bundle.main.url(forResource: "Places", withExtension: "plist"),
+      let plistData = try? Data(contentsOf: plistUrl) else { return nil }
+    var placedEntries: [[String: Any]]? = nil
+    
+    do {
+      placedEntries = try PropertyListSerialization.propertyList(from: plistData, options: [], format: nil) as? [[String: Any]]
+    } catch {
+      print("error reading plist")
+    }
+    return placedEntries
+  }
+  
 }
 
 //  MARK: - CoreLocation Delegate methods
@@ -187,13 +226,13 @@ extension MapVC: CLLocationManagerDelegate {
   
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     
-    if previousLocation == nil {
-      previousLocation = locations.first
+    if currentLocation == nil {
+      currentLocation = locations.first
     } else {
       guard let latest = locations.first else {return}
-      let distanceInMeters = previousLocation?.distance(from: latest) ?? 0
+      let distanceInMeters = currentLocation?.distance(from: latest) ?? 0
       print("distance in meters: \(distanceInMeters)")
-      previousLocation = latest
+      currentLocation = latest
     }
     
   }
