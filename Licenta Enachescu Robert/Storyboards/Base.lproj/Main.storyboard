@@ -179,11 +179,16 @@
                                     <action selector="changeMapType:" destination="BYZ-38-t0r" eventType="valueChanged" id="cnK-Db-PUu"/>
                                 </connections>
                             </segmentedControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IG6-bx-7YP">
-                                <rect key="frame" x="364" y="822.5" width="20" height="19"/>
+                            <button opaque="NO" alpha="0.94999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IG6-bx-7YP">
+                                <rect key="frame" x="364" y="107.5" width="30" height="30.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="2kt-38-l9p"/>
+                                    <constraint firstAttribute="width" constant="30" id="p56-AH-oCN"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" backgroundImage="person.crop.circle" catalog="system"/>
+                                <state key="normal" backgroundImage="mappin.and.ellipse" catalog="system"/>
                                 <connections>
                                     <action selector="goToUserLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="14y-i3-Dva"/>
                                 </connections>
@@ -191,14 +196,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="IG6-bx-7YP" secondAttribute="bottom" constant="20" id="0Gb-hK-tET"/>
                             <constraint firstItem="xnt-Mn-S5J" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="8vc-cH-h9i"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IG6-bx-7YP" secondAttribute="trailing" constant="20" id="Ccf-hG-4WV"/>
                             <constraint firstAttribute="trailing" secondItem="xnt-Mn-S5J" secondAttribute="trailing" id="HCQ-vb-f5c"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IG6-bx-7YP" secondAttribute="trailing" constant="30" id="K46-0o-LWC"/>
                             <constraint firstItem="xnt-Mn-S5J" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="KZn-oG-QSY"/>
                             <constraint firstAttribute="bottom" secondItem="xnt-Mn-S5J" secondAttribute="bottom" id="Onw-kZ-hag"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="D6x-8f-iv1" secondAttribute="bottom" constant="20" id="RQt-yf-Yzo"/>
                             <constraint firstItem="D6x-8f-iv1" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="UYF-iL-RWR"/>
+                            <constraint firstItem="IG6-bx-7YP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="q5b-A4-8qq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -241,7 +246,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="person.crop.circle" catalog="system" width="64" height="60"/>
+        <image name="mappin.and.ellipse" catalog="system" width="58" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="cSg-rr-edi"/>
