@@ -176,6 +176,13 @@ class MapVC: UIViewController {
   }
   
   func activateLocationServices() {
+    if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+      for scooter in scooters {
+        let region = CLCircularRegion(center: scooter.location.coordinate, radius: 500, identifier: scooter.name)
+        region.notifyOnEntry = true
+        locationManager?.startMonitoring(for: region)
+      }
+    }
     locationManager?.startUpdatingLocation()
   }
   
@@ -232,7 +239,7 @@ class MapVC: UIViewController {
   }
   
   private func loadPlist() -> [[String: Any]]? {
-    guard let plistUrl = Bundle.main.url(forResource: "Places", withExtension: "plist"),
+    guard let plistUrl = Bundle.main.url(forResource: "Scooters", withExtension: "plist"),
       let plistData = try? Data(contentsOf: plistUrl) else { return nil }
     var placedEntries: [[String: Any]]? = nil
     
@@ -255,6 +262,22 @@ extension MapVC: CLLocationManagerDelegate {
       activateLocationServices()
     }
     
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+    if presentingViewController == nil {
+      let alertController = UIAlertController(title: "Scooter nearby", message: "You are near the \(region.identifier). Go ahead, let's drive a little!", preferredStyle: .alert)
+      let alertAction = UIAlertAction(title: "OK", style: .default, handler: {
+        [weak self] action in
+        self?.dismiss(animated: true, completion: nil)
+      })
+      alertController.addAction(alertAction)
+      present(alertController, animated: false, completion: nil)
+    }
+  }
+  
+  func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+    print(error.localizedDescription)
   }
   
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
