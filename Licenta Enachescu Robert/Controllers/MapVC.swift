@@ -120,6 +120,8 @@ class MapVC: UIViewController {
     updateUI()
     
     mapView.addAnnotations(scooters)
+    mapView.register(ScooterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+    mapView.register(ClusterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
         
     if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
       activateLocationServices()
@@ -307,48 +309,5 @@ extension MapVC: CLLocationManagerDelegate {
 
 //  MARK: - MapKit Delegate methods
 extension MapVC: MKMapViewDelegate {
-  
-  func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-    if annotation is MKUserLocation {
-      return nil
-    }
-    
-    if let cluster = annotation as? MKClusterAnnotation {
-      var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "cluster") as? MKMarkerAnnotationView
-      if annotationView == nil {
-        annotationView = MKMarkerAnnotationView(annotation: nil, reuseIdentifier: "cluster")
-      }
-      annotationView?.markerTintColor = UIColor.brown
-      for clusterAnnotation in cluster.memberAnnotations {
-        if let scooterAnnotation = clusterAnnotation as? ScooterModel {
-          cluster.title = scooterAnnotation.title
-          break
-        }
-      }
-      annotationView?.annotation = cluster
-      return annotationView
-    }
-    
-    if let scooterAnnotation = annotation as? ScooterModel {
-      var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "ScooterModel") as? MKMarkerAnnotationView
-      if annotationView == nil {
-        annotationView = MKMarkerAnnotationView(annotation: annotationView as? MKAnnotation, reuseIdentifier: "ScooterModel")
-        annotationView?.canShowCallout = true
-        annotationView?.clusteringIdentifier = "cluster"
-      } else {
-        annotationView?.annotation = annotation
-      }
-      annotationView?.glyphText = "🛵"
-      annotationView?.markerTintColor = UIColor(displayP3Red: 0.082, green: 0.518, blue: 0.263, alpha: 1.0)
-      
-      let image = UIImage(named: scooterAnnotation.imageName)
-      let imageView = UIImageView(image: image)
-      annotationView?.detailCalloutAccessoryView = imageView
-      
-      return annotationView
-    }
-    
-    return nil
-  }
   
 }

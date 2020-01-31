@@ -16,6 +16,8 @@
 		F65E2CB723D4F5AD00E3299C /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65E2CB623D4F5AD00E3299C /* RegisterVC.swift */; };
 		F65E2CC523D500A600E3299C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F65E2CC423D500A600E3299C /* GoogleService-Info.plist */; };
 		F6889A8A23D74AA50068EF01 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6889A8923D74AA50068EF01 /* User.swift */; };
+		F68925D723E44AC100C083DC /* ScooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68925D623E44AC100C083DC /* ScooterView.swift */; };
+		F68925DA23E44C0900C083DC /* ClusterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68925D923E44C0900C083DC /* ClusterView.swift */; };
 		F6F0F78823D3891D0077414A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0F78723D3891D0077414A /* AppDelegate.swift */; };
 		F6F0F78A23D3891D0077414A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0F78923D3891D0077414A /* SceneDelegate.swift */; };
 		F6F0F78C23D3891D0077414A /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0F78B23D3891D0077414A /* MapVC.swift */; };
@@ -38,6 +40,8 @@
 		F65E2CB623D4F5AD00E3299C /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		F65E2CC423D500A600E3299C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F6889A8923D74AA50068EF01 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F68925D623E44AC100C083DC /* ScooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScooterView.swift; sourceTree = "<group>"; };
+		F68925D923E44C0900C083DC /* ClusterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterView.swift; sourceTree = "<group>"; };
 		F6F0F78423D3891D0077414A /* Licenta Enachescu Robert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Licenta Enachescu Robert.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6F0F78723D3891D0077414A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F6F0F78923D3891D0077414A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +131,15 @@
 			path = Other;
 			sourceTree = "<group>";
 		};
+		F68925D823E44BB800C083DC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F68925D623E44AC100C083DC /* ScooterView.swift */,
+				F68925D923E44C0900C083DC /* ClusterView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F6F0F77B23D3891D0077414A = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				F63C1DEF23D64A2C00C11AA1 /* Licenta Enachescu Robert.entitlements */,
+				F68925D823E44BB800C083DC /* Views */,
 				F65E2CBC23D4FA9500E3299C /* Models */,
 				F65E2CBD23D4FA9F00E3299C /* Controllers */,
 				F65E2CBF23D4FB0000E3299C /* Storyboards */,
@@ -286,6 +300,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F68925D723E44AC100C083DC /* ScooterView.swift in Sources */,
+				F68925DA23E44C0900C083DC /* ClusterView.swift in Sources */,
 				F6F0F79223D3891D0077414A /* Licenta_Enachescu_Robert.xcdatamodeld in Sources */,
 				F63C1DEE23D5ADE100C11AA1 /* UserModel.swift in Sources */,
 				F6F0F78C23D3891D0077414A /* MapVC.swift in Sources */,
