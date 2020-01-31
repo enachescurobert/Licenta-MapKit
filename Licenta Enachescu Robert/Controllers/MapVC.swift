@@ -10,12 +10,14 @@ import UIKit
 import CoreLocation
 import MapKit
 import Firebase
+import AVFoundation
 
 class MapVC: UIViewController {
   
   // MARK: - IBOutlets
   @IBOutlet weak var mapView: MKMapView!
   @IBOutlet weak var onlineUsersCount: UIBarButtonItem!
+  @IBOutlet weak var directionsTableView: UITableView!
   
   // MARK: - Properties
   var locationManager: CLLocationManager?
@@ -26,15 +28,17 @@ class MapVC: UIViewController {
   var users: [UserModel] = []
   var user: User!
   var scooters:[ScooterModel] = []
+  var travelDirections: [String] = []
   lazy var geocoder = CLGeocoder()
+  var voice:AVSpeechSynthesizer?
   
   override func viewDidLoad() {
     super.viewDidLoad()
-        
-    self.navigationItem.hidesBackButton = true
-//    self.navigationController?.setNavigationBarHidden(true, animated: false)
     
-//      MARK: - Upload to Firebase
+    self.navigationItem.hidesBackButton = true
+    //    self.navigationController?.setNavigationBarHidden(true, animated: false)
+    
+    //      MARK: - Upload to Firebase
     let userRef = self.userItemsReference.child(childName)
     let values: [String: Any] = ["email": "testescu@gmail.com",
                                  "engineStarted": false,
@@ -43,7 +47,7 @@ class MapVC: UIViewController {
     ]
     userRef.setValue(values)
     
-//      MARK: - Read from Database
+    //      MARK: - Read from Database
     ///    Getting the entire Object
     userItemsReference.child(childName).observe(.value, with: {
       snapshot in
@@ -81,7 +85,7 @@ class MapVC: UIViewController {
       //      print("Users: \(self.users)")
     })
     
-//    MARK: - Querying Firebase
+    //    MARK: - Querying Firebase
     userItemsReference.queryOrdered(byChild: "scooter").observe(.value, with: {
       snapshot in
       var newUsers: [UserModel] = []
@@ -93,20 +97,21 @@ class MapVC: UIViewController {
       self.users = newUsers
     })
     
-//    MARK: - Updating Firebase
+    //    MARK: - Updating Firebase
     let valuesToUpdate:[String: Any] = ["email":"updated_email@gmail.com"]
     userItemsReference.child(childName).ref.updateChildValues(valuesToUpdate)
     
-//    MARK: - Deleting the Firebase reference
+    //    MARK: - Deleting the Firebase reference
     //Deleting by using removeValue
     userItemsReference.child("Robert").ref.removeValue()
     //If we'll set a nil value, it will be deleted
     userItemsReference.child("Robert").setValue(nil)
-            
-//    MARK: - Setting the map
+    
+    //    MARK: - Setting the map
     let ourLocation = CLLocation(latitude: 44.410, longitude: 26.100)
     let regionRadius: CLLocationDistance = 25000.0
     let region = MKCoordinateRegion(center: ourLocation.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+    voice = AVSpeechSynthesizer()
     mapView.setRegion(region, animated: true)
     mapView.delegate = self
     
@@ -122,7 +127,7 @@ class MapVC: UIViewController {
     mapView.addAnnotations(scooters)
     mapView.register(ScooterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     mapView.register(ClusterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
-        
+    
     if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
       activateLocationServices()
     } else {
@@ -147,29 +152,78 @@ class MapVC: UIViewController {
         self.onlineUsersCount?.title = "0 online users"
       }
     })
+        
+    directionsTableView.delegate = self
+    directionsTableView.dataSource = self
     
   }
   
   //  MARK: - IBActions
   @IBAction func changeMapType(_ sender: UISegmentedControl) {
-    if sender.selectedSegmentIndex == 0 {
-      mapView.mapType = .standard
-    } else if sender.selectedSegmentIndex == 1 {
-      mapView.mapType = .satellite
+    
+    if sender.selectedSegmentIndex == 0 || sender.selectedSegmentIndex == 1 {
+      mapView.isHidden = false
+      directionsTableView.isHidden = true
+      if sender.selectedSegmentIndex == 0 {
+        mapView.mapType = .standard
+        directionsTableView.isHidden = true
+      } else if sender.selectedSegmentIndex == 1 {
+        mapView.mapType = .satellite
+        directionsTableView.isHidden = true
+      }
+    } else {
+      mapView.isHidden = true
+      directionsTableView.isHidden = false
     }
+  }
+  
+  private func loadDirections(destination:CLLocation?) {
+    
+    let testDestination:CLLocation?
+    testDestination = CLLocation(latitude: 44.48066 , longitude: 26.11528)
+    let myTestSourceLocation:CLLocation?
+    myTestSourceLocation = CLLocation(latitude: 44.45, longitude: 26.111)
+    
+    guard let start = myTestSourceLocation, let end = testDestination else { return }
+    let request = MKDirections.Request()
+    let startMapItem = MKMapItem(placemark: MKPlacemark(coordinate: start.coordinate))
+    let endMapItem = MKMapItem(placemark: MKPlacemark(coordinate: end.coordinate))
+    request.source = startMapItem
+    request.destination = endMapItem
+    request.requestsAlternateRoutes = false
+    request.transportType = .automobile
+    let directions = MKDirections(request: request)
+    directions.calculate() {
+      [weak self] (response, error) in
+      if let error = error {
+        print(error.localizedDescription)
+        return
+      }
+      if let route = response?.routes.first {
+        let formatter = MKDistanceFormatter()
+        formatter.unitStyle = .full
+        formatter.units = .metric
+        for step in route.steps {
+          let distance = formatter.string(fromDistance: step.distance)
+          self?.travelDirections.append(step.instructions + " (\(distance)")
+        }
+        self?.directionsTableView.reloadData()
+      }
+    }
+    
   }
   
   @IBAction func signOut(_ sender: Any) {
     do {
-        try Auth.auth().signOut()
+      try Auth.auth().signOut()
       self.navigationController?.popViewController(animated: true)
-        } catch let err {
-            print(err)
+    } catch let err {
+      print(err)
     }
   }
   
   @IBAction func goToUserLocation(_ sender: Any) {
-        mapView.setCenter(mapView?.userLocation.coordinate ?? CLLocationCoordinate2DMake(44.410, 26.100), animated: true)
+    mapView.setCenter(mapView?.userLocation.coordinate ?? CLLocationCoordinate2DMake(44.410, 26.100), animated: true)
   }
   
   // MARK: - Methods
@@ -202,8 +256,8 @@ class MapVC: UIViewController {
     
     for property in entries {
       guard let name = property["Name"] as? String,
-            let latitude = property["Latitude"] as? NSNumber,
-            let longitude = property["Longitude"] as? NSNumber,
+        let latitude = property["Latitude"] as? NSNumber,
+        let longitude = property["Longitude"] as? NSNumber,
         let image = property["Image"] as? String else {
           fatalError("Error reading data")
       }
@@ -309,5 +363,42 @@ extension MapVC: CLLocationManagerDelegate {
 
 //  MARK: - MapKit Delegate methods
 extension MapVC: MKMapViewDelegate {
+  func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+    let alert = UIAlertController(title: "Scooter selected", message: "Do you want to a route to this scooter?", preferredStyle: .alert)
+
+    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+      let destinationLocation = view.annotation?.coordinate
+      let destination:CLLocation = CLLocation(latitude: destinationLocation!.latitude, longitude: destinationLocation!.longitude)
+      self.loadDirections(destination: destination)
+    }))
+    alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+
+    self.present(alert, animated: true)
+    
+  }
+  
+}
+
+extension MapVC: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+    let text = travelDirections[indexPath.row]
+    let utterance = AVSpeechUtterance(string: text)
+    voice?.speak(utterance)
+    
+  }
+}
+
+extension MapVC: UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return travelDirections.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "DirectionCell", for: indexPath)
+    cell.textLabel?.text = travelDirections[indexPath.row]
+    return cell
+  }
+  
   
 }

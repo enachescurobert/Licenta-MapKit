@@ -12,7 +12,7 @@
 		<key>Longitude</key>
 		<real>26.11528</real>
 		<key>Image</key>
-		<string>location.png</string>
+		<string>app-icon.png</string>
 	</dict>
 	<dict>
 		<key>shouldBeOnTopOfCluster</key>
@@ -24,7 +24,7 @@
 		<key>Longitude</key>
 		<real>26.11528</real>
 		<key>Image</key>
-		<string>location.png</string>
+		<string>app-icon.png</string>
 	</dict>
 	<dict>
 		<key>Name</key>
@@ -34,7 +34,7 @@
 		<key>Longitude</key>
 		<real>26.11451</real>
 		<key>Image</key>
-		<string>location.png</string>
+		<string>app-icon.png</string>
 	</dict>
 	<dict>
 		<key>shouldBeOnTopOfCluster</key>
@@ -46,7 +46,7 @@
 		<key>Longitude</key>
 		<real>26.11421</real>
 		<key>Image</key>
-		<string>location.png</string>
+		<string>app-icon.png</string>
 	</dict>
 </array>
 </plist>
