@@ -364,7 +364,7 @@ extension MapVC: CLLocationManagerDelegate {
 //  MARK: - MapKit Delegate methods
 extension MapVC: MKMapViewDelegate {
   func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-    let alert = UIAlertController(title: "Scooter selected", message: "Do you want to a route to this scooter?", preferredStyle: .alert)
+    let alert = UIAlertController(title: "Scooter selected", message: "Do you want a route to this scooter?", preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
       let destinationLocation = view.annotation?.coordinate

@@ -14,6 +14,7 @@ class ClusterView: MKMarkerAnnotationView {
   override var annotation: MKAnnotation? {
     willSet {
       markerTintColor = UIColor.brown
+      displayPriority = .required
     }
   }
 
