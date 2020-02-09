@@ -156,6 +156,8 @@ class MapVC: UIViewController {
     directionsTableView.delegate = self
     directionsTableView.dataSource = self
     
+    produceOverlay()
+    
   }
   
   //  MARK: - IBActions
@@ -175,6 +177,19 @@ class MapVC: UIViewController {
       mapView.isHidden = true
       directionsTableView.isHidden = false
     }
+  }
+  
+  private func produceOverlay() {
+    var points: [CLLocationCoordinate2D] = []
+    points.append(CLLocationCoordinate2DMake(44.5045861, 26.0606003))
+    points.append(CLLocationCoordinate2DMake(44.5048310, 26.1622238))
+    points.append(CLLocationCoordinate2DMake(44.3830111, 26.1711502))
+    points.append(CLLocationCoordinate2DMake(44.3842379, 26.0595703))
+    points.append(CLLocationCoordinate2DMake(44.5055655, 26.0595703))
+    
+    let polygon = MKPolygon(coordinates: &points, count: points.count)
+    mapView.addOverlay(polygon)
+
   }
   
   private func loadDirections(destination:CLLocation?) {
@@ -374,6 +389,17 @@ extension MapVC: MKMapViewDelegate {
     alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
 
     self.present(alert, animated: true)
+    
+  }
+  
+  func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+    
+    let polyRenderer = MKPolygonRenderer(overlay: overlay)
+    polyRenderer.strokeColor = UIColor.green.withAlphaComponent(0.5)
+    polyRenderer.fillColor = UIColor.green.withAlphaComponent(0.2)
+    polyRenderer.lineWidth = 2.0
+    
+    return polyRenderer
     
   }
   
