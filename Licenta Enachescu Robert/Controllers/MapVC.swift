@@ -192,14 +192,25 @@ class MapVC: UIViewController {
 
   }
   
+  private func producePolylineOverlay(destination: CLLocationCoordinate2D) {
+    var points: [CLLocationCoordinate2D] = []
+    points.append(CLLocationCoordinate2DMake((currentLocation?.coordinate.latitude)!, (currentLocation?.coordinate.longitude)!))
+    
+    points.append(destination)
+    
+    let polyline = MKPolyline(coordinates: points, count: points.count)
+    mapView.addOverlay(polyline)
+
+  }
+  
   private func loadDirections(destination:CLLocation?) {
     
-    let testDestination:CLLocation?
-    testDestination = CLLocation(latitude: 44.48066 , longitude: 26.11528)
-    let myTestSourceLocation:CLLocation?
-    myTestSourceLocation = CLLocation(latitude: 44.45, longitude: 26.111)
+    if travelDirections.count != 0 {
+      self.travelDirections.removeAll()
+      self.directionsTableView.reloadData()
+    }
     
-    guard let start = myTestSourceLocation, let end = testDestination else { return }
+    guard let start = currentLocation, let end = destination else { return }
     let request = MKDirections.Request()
     let startMapItem = MKMapItem(placemark: MKPlacemark(coordinate: start.coordinate))
     let endMapItem = MKMapItem(placemark: MKPlacemark(coordinate: end.coordinate))
@@ -225,6 +236,8 @@ class MapVC: UIViewController {
         self?.directionsTableView.reloadData()
       }
     }
+    
+    self.producePolylineOverlay(destination: CLLocationCoordinate2DMake((destination?.coordinate.latitude)!, (destination?.coordinate.longitude)!))
     
   }
   
@@ -382,6 +395,7 @@ extension MapVC: MKMapViewDelegate {
     let alert = UIAlertController(title: "Scooter selected", message: "Do you want a route to this scooter?", preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+      
       let destinationLocation = view.annotation?.coordinate
       let destination:CLLocation = CLLocation(latitude: destinationLocation!.latitude, longitude: destinationLocation!.longitude)
       self.loadDirections(destination: destination)
@@ -394,13 +408,23 @@ extension MapVC: MKMapViewDelegate {
   
   func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
     
-    let polyRenderer = MKPolygonRenderer(overlay: overlay)
-    polyRenderer.strokeColor = UIColor.green.withAlphaComponent(0.5)
-    polyRenderer.fillColor = UIColor.green.withAlphaComponent(0.2)
-    polyRenderer.lineWidth = 2.0
+    if overlay is MKPolygon {
+      let polyRenderer = MKPolygonRenderer(overlay: overlay)
+      polyRenderer.strokeColor = UIColor.green.withAlphaComponent(0.5)
+      polyRenderer.fillColor = UIColor.green.withAlphaComponent(0.2)
+      polyRenderer.lineWidth = 2.0
+      
+      return polyRenderer
+    } else if overlay is MKPolyline {
+      let polylineRenderer = MKPolylineRenderer(overlay: overlay)
+      polylineRenderer.strokeColor = UIColor.red.withAlphaComponent(0.8)
+      polylineRenderer.fillColor = UIColor.blue.withAlphaComponent(0.7)
+      polylineRenderer.lineWidth = 2.0
+      return polylineRenderer
+    }
     
-    return polyRenderer
-    
+    return MKOverlayRenderer(overlay: overlay)
+        
   }
   
 }
