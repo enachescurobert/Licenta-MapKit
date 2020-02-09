@@ -192,17 +192,6 @@ class MapVC: UIViewController {
 
   }
   
-  private func producePolylineOverlay(destination: CLLocationCoordinate2D) {
-    var points: [CLLocationCoordinate2D] = []
-    points.append(CLLocationCoordinate2DMake((currentLocation?.coordinate.latitude)!, (currentLocation?.coordinate.longitude)!))
-    
-    points.append(destination)
-    
-    let polyline = MKPolyline(coordinates: points, count: points.count)
-    mapView.addOverlay(polyline)
-
-  }
-  
   private func loadDirections(destination:CLLocation?) {
     
     if travelDirections.count != 0 {
@@ -226,6 +215,9 @@ class MapVC: UIViewController {
         return
       }
       if let route = response?.routes.first {
+        
+        self?.mapView.addOverlay(route.polyline)
+        
         let formatter = MKDistanceFormatter()
         formatter.unitStyle = .full
         formatter.units = .metric
@@ -236,8 +228,6 @@ class MapVC: UIViewController {
         self?.directionsTableView.reloadData()
       }
     }
-    
-    self.producePolylineOverlay(destination: CLLocationCoordinate2DMake((destination?.coordinate.latitude)!, (destination?.coordinate.longitude)!))
     
   }
   
@@ -415,15 +405,13 @@ extension MapVC: MKMapViewDelegate {
       polyRenderer.lineWidth = 2.0
       
       return polyRenderer
-    } else if overlay is MKPolyline {
+    } else {
       let polylineRenderer = MKPolylineRenderer(overlay: overlay)
-      polylineRenderer.strokeColor = UIColor.red.withAlphaComponent(0.8)
-      polylineRenderer.fillColor = UIColor.blue.withAlphaComponent(0.7)
+      polylineRenderer.strokeColor = UIColor.blue.withAlphaComponent(0.8)
       polylineRenderer.lineWidth = 2.0
       return polylineRenderer
     }
     
-    return MKOverlayRenderer(overlay: overlay)
         
   }
   
