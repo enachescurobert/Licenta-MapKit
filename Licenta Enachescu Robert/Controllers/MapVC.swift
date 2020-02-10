@@ -415,6 +415,7 @@ extension MapVC: MKMapViewDelegate {
       let destinationLocation = view.annotation?.coordinate
       let destination:CLLocation = CLLocation(latitude: destinationLocation!.latitude, longitude: destinationLocation!.longitude)
       self.loadDirections(destination: destination)
+      mapView.deselectAnnotation(view.annotation, animated: false)
     }))
     
     alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
