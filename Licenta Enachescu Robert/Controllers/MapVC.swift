@@ -303,7 +303,7 @@ class MapVC: UIViewController {
     
     for scooter in scooters {
       geocoder.reverseGeocodeLocation(scooter.location, completionHandler: {
-        [weak self](placemarks, error) in
+        (placemarks, error) in
         if let error = error {
           print(error.localizedDescription)
           return
