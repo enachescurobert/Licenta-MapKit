@@ -20,6 +20,7 @@ class ScooterView: MKMarkerAnnotationView {
           displayPriority = .defaultHigh
         }
         clusteringIdentifier = MKMapViewDefaultClusterAnnotationViewReuseIdentifier
+        rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         canShowCallout = true
         let image = UIImage(named: scooterAnnotation.imageName)
         let imageView = UIImageView(image: image)

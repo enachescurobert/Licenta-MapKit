@@ -29,6 +29,7 @@ class MapVC: UIViewController {
   var user: User!
   var scooters:[ScooterModel] = []
   var travelDirections: [String] = []
+  var polylineDirections: [MKPolyline] = []
   lazy var geocoder = CLGeocoder()
   var voice:AVSpeechSynthesizer?
   
@@ -157,6 +158,7 @@ class MapVC: UIViewController {
     directionsTableView.dataSource = self
     
     produceOverlay()
+    producePolylineOverlay()
     
   }
   
@@ -192,6 +194,19 @@ class MapVC: UIViewController {
 
   }
   
+  private func producePolylineOverlay() {
+    var points: [MKMapPoint] = []
+    
+    guard let lat = currentLocation?.coordinate.latitude,
+      let long = currentLocation?.coordinate.longitude else {return}
+    
+    points.append(MKMapPoint(x: lat, y: long))
+    points.append(MKMapPoint(x: 44.5048310, y: 26.1622238))
+    let polygon = MKPolyline(points: points, count: points.count)
+    mapView.addOverlay(polygon)
+    
+  }
+  
   private func loadDirections(destination:CLLocation?) {
     
     if travelDirections.count != 0 {
@@ -215,8 +230,18 @@ class MapVC: UIViewController {
         return
       }
       if let route = response?.routes.first {
+
+        let overlays = self!.mapView.overlays
+        for overlay in overlays {
+          if overlay is MKPolyline {
+            self!.mapView.removeOverlay(overlay)
+            }
+        }
         
-        self?.mapView.addOverlay(route.polyline)
+        let polyline: MKPolyline = route.polyline
+        polyline.title = "titleForPolyline"
+        
+        self?.mapView.addOverlay(polyline)
         
         let formatter = MKDistanceFormatter()
         formatter.unitStyle = .full
@@ -381,19 +406,19 @@ extension MapVC: CLLocationManagerDelegate {
 
 //  MARK: - MapKit Delegate methods
 extension MapVC: MKMapViewDelegate {
-  func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+  
+  func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
     let alert = UIAlertController(title: "Scooter selected", message: "Do you want a route to this scooter?", preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-      
       let destinationLocation = view.annotation?.coordinate
       let destination:CLLocation = CLLocation(latitude: destinationLocation!.latitude, longitude: destinationLocation!.longitude)
       self.loadDirections(destination: destination)
     }))
-    alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-
-    self.present(alert, animated: true)
     
+    alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+    self.present(alert, animated: true)
   }
   
   func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -405,14 +430,30 @@ extension MapVC: MKMapViewDelegate {
       polyRenderer.lineWidth = 2.0
       
       return polyRenderer
-    } else {
+    } else if overlay is MKPolyline {
+      
+//      if overlay.title == "titleForPolyline" {
+//        mapView.removeOverlay(overlay)
+//      }
+      
+//      let overlays = mapView.overlays
+//      for overlay in overlays {
+//        if overlay is MKPolyline {
+//            mapView.removeOverlay(overlay)
+//        }
+//      }
+      
+//      mapView.removeOverlays(mapView.overlays)
+//      produceOverlay()
+      
       let polylineRenderer = MKPolylineRenderer(overlay: overlay)
+      
       polylineRenderer.strokeColor = UIColor.blue.withAlphaComponent(0.8)
       polylineRenderer.lineWidth = 2.0
       return polylineRenderer
     }
     
-        
+    return MKOverlayRenderer()
   }
   
 }
