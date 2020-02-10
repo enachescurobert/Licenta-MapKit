@@ -9,23 +9,23 @@
 import UIKit
 import CoreLocation
 import MapKit
-import Firebase
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+import FirebaseAuth
 import AVFoundation
 
 class MapVC: UIViewController {
   
   // MARK: - IBOutlets
   @IBOutlet weak var mapView: MKMapView!
-  @IBOutlet weak var onlineUsersCount: UIBarButtonItem!
   @IBOutlet weak var directionsTableView: UITableView!
   
   // MARK: - Properties
   var locationManager: CLLocationManager?
   var currentLocation: CLLocation?
-  var userItemsReference = Database.database().reference(withPath: "Users")
-  var onlineUsersReference = Database.database().reference(withPath: "Online")
+  var db: Firestore!
   var childName = "Aurelian"
-  var users: [UserModel] = []
   var user: User!
   var scooters:[ScooterModel] = []
   var travelDirections: [String] = []
@@ -37,74 +37,38 @@ class MapVC: UIViewController {
     super.viewDidLoad()
     self.navigationItem.hidesBackButton = true
     
+    // [START setup]
+    let settings = FirestoreSettings()
+    Firestore.firestore().settings = settings
+    // [END setup]
+    db = Firestore.firestore()
+    
     //      MARK: - Upload to Firebase
-    let userRef = self.userItemsReference.child(childName)
-    let values: [String: Any] = ["email": "testescu@gmail.com",
-                                 "engineStarted": false,
-                                 "scooter": false,
-                                 "username": "testescu"
-    ]
-    userRef.setValue(values)
+    // Add a new document with a generated ID
+    var ref: DocumentReference? = nil
+    ref = db.collection("users").addDocument(data: [
+        "first": "Robert",
+        "last": "Test",
+        "born": 1996
+    ]) { err in
+        if let err = err {
+            print("Error adding document: \(err)")
+        } else {
+            print("Document added with ID: \(ref!.documentID)")
+        }
+    }
     
     //      MARK: - Read from Database
     ///    Getting the entire Object
-    userItemsReference.child(childName).observe(.value, with: {
-      snapshot in
-      print(snapshot)
-    })
-    
-    ///    Parsing all elements
-    userItemsReference.child(childName).observe(.value, with: {
-      snapshot in
-      let values = snapshot.value as! [String:AnyObject]
-      let email = values["email"] as! String
-      let username = values["username"] as! String
-      let scooter = values["scooter"] as! Bool
-      let engineStarted = values["engineStarted"] as! Bool
-      
-      print("email: \(email)")
-      print("username: \(username)")
-      print("is a scooter: \(scooter)")
-      if scooter {
-        print("the engine is on: \(engineStarted)")
-      }
-      
-    })
-    
-    ///    Creating an array of Users
-    userItemsReference.observe(.value, with: {
-      snapshot in
-      var newUsers: [UserModel] = []
-      for user in snapshot.children {
-        let userItem = UserModel(snapshot: user as! DataSnapshot)
-        newUsers.append(userItem)
-      }
-      
-      self.users = newUsers
-      //      print("Users: \(self.users)")
-    })
-    
-    //    MARK: - Querying Firebase
-    userItemsReference.queryOrdered(byChild: "scooter").observe(.value, with: {
-      snapshot in
-      var newUsers: [UserModel] = []
-      for user in snapshot.children {
-        let userItem = UserModel(snapshot: user as! DataSnapshot)
-        newUsers.append(userItem)
-      }
-      
-      self.users = newUsers
-    })
-    
-    //    MARK: - Updating Firebase
-    let valuesToUpdate:[String: Any] = ["email":"updated_email@gmail.com"]
-    userItemsReference.child(childName).ref.updateChildValues(valuesToUpdate)
-    
-    //    MARK: - Deleting the Firebase reference
-    //Deleting by using removeValue
-    userItemsReference.child("Robert").ref.removeValue()
-    //If we'll set a nil value, it will be deleted
-    userItemsReference.child("Robert").setValue(nil)
+    db.collection("Users").getDocuments() { (querySnapshot, err) in
+        if let err = err {
+            print("Error getting documents: \(err)")
+        } else {
+            for document in querySnapshot!.documents {
+                print("\(document.documentID) => \(document.data())")
+            }
+        }
+    }
     
     //    MARK: - Setting the map
     let ourLocation = CLLocation(latitude: 44.410, longitude: 26.100)
@@ -132,25 +96,6 @@ class MapVC: UIViewController {
     } else {
       startLocationService()
     }
-    
-    Auth.auth().addStateDidChangeListener {
-      auth, user in
-      if let user = user {
-        self.user = User(uid: user.uid, email: user.email!)
-        let currentUserReference = self.onlineUsersReference.child(self.user.uid)
-        currentUserReference.setValue(self.user.email)
-        currentUserReference.onDisconnectRemoveValue()
-      }
-    }
-    
-    onlineUsersReference.observe(.value, with: {
-      snapshot in
-      if snapshot.exists() {
-        self.onlineUsersCount?.title = "Online users: \(snapshot.childrenCount.description)"
-      } else {
-        self.onlineUsersCount?.title = "0 online users"
-      }
-    })
         
     directionsTableView.delegate = self
     directionsTableView.dataSource = self

@@ -224,19 +224,15 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="pp7-eG-UAM">
-                        <rightBarButtonItems>
-                            <barButtonItem title="Sign out" id="GVk-Gm-uCO">
-                                <connections>
-                                    <action selector="signOut:" destination="BYZ-38-t0r" id="axU-bo-uva"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem enabled="NO" title="Online Users" id="nDm-kg-hU7"/>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" title="Sign out" id="GVk-Gm-uCO">
+                            <connections>
+                                <action selector="signOut:" destination="BYZ-38-t0r" id="axU-bo-uva"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="directionsTableView" destination="nlo-2B-EU8" id="ZIb-f2-vvZ"/>
                         <outlet property="mapView" destination="xnt-Mn-S5J" id="Lxu-GR-1KR"/>
-                        <outlet property="onlineUsersCount" destination="nDm-kg-hU7" id="5Z8-Tk-QU3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

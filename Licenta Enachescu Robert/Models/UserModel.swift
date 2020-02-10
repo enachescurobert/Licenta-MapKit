@@ -14,7 +14,7 @@ struct UserModel {
   let key: String
   let email: String
   let username: String
-  let ref: DatabaseReference?
+//  let ref: DatabaseReference?
   var engineStarted: Bool
   var scooter: Bool
   
@@ -25,18 +25,18 @@ struct UserModel {
     self.username = username
     self.scooter = scooter
     self.engineStarted = engineStarted
-    self.ref = nil
+//    self.ref = nil
   }
   
-  init(snapshot: DataSnapshot) {
-    key = snapshot.key
-    let snapshotValue = snapshot.value as! [String: AnyObject]
-    email = snapshotValue["email"] as! String
-    username = snapshotValue["username"] as! String
-    scooter = snapshotValue["scooter"] as! Bool
-    engineStarted = snapshotValue["engineStarted"] as! Bool
-    ref = snapshot.ref
-  }
+//  init(snapshot: DataSnapshot) {
+//    key = snapshot.key
+//    let snapshotValue = snapshot.value as! [String: AnyObject]
+//    email = snapshotValue["email"] as! String
+//    username = snapshotValue["username"] as! String
+//    scooter = snapshotValue["scooter"] as! Bool
+//    engineStarted = snapshotValue["engineStarted"] as! Bool
+//    ref = snapshot.ref
+//  }
   
   func toAnyObject() -> Any {
     return [
