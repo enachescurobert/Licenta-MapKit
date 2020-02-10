@@ -35,9 +35,7 @@ class MapVC: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     self.navigationItem.hidesBackButton = true
-    //    self.navigationController?.setNavigationBarHidden(true, animated: false)
     
     //      MARK: - Upload to Firebase
     let userRef = self.userItemsReference.child(childName)
@@ -158,8 +156,6 @@ class MapVC: UIViewController {
     directionsTableView.dataSource = self
     
     produceOverlay()
-    producePolylineOverlay()
-    
   }
   
   //  MARK: - IBActions
@@ -191,22 +187,8 @@ class MapVC: UIViewController {
     
     let polygon = MKPolygon(coordinates: &points, count: points.count)
     mapView.addOverlay(polygon)
+  }
 
-  }
-  
-  private func producePolylineOverlay() {
-    var points: [MKMapPoint] = []
-    
-    guard let lat = currentLocation?.coordinate.latitude,
-      let long = currentLocation?.coordinate.longitude else {return}
-    
-    points.append(MKMapPoint(x: lat, y: long))
-    points.append(MKMapPoint(x: 44.5048310, y: 26.1622238))
-    let polygon = MKPolyline(points: points, count: points.count)
-    mapView.addOverlay(polygon)
-    
-  }
-  
   private func loadDirections(destination:CLLocation?) {
     
     if travelDirections.count != 0 {
@@ -231,17 +213,15 @@ class MapVC: UIViewController {
       }
       if let route = response?.routes.first {
 
+        /// Delete the old polyline if a new one will be created
         let overlays = self!.mapView.overlays
         for overlay in overlays {
           if overlay is MKPolyline {
             self!.mapView.removeOverlay(overlay)
             }
         }
-        
-        let polyline: MKPolyline = route.polyline
-        polyline.title = "titleForPolyline"
-        
-        self?.mapView.addOverlay(polyline)
+
+        self?.mapView.addOverlay(route.polyline)
         
         let formatter = MKDistanceFormatter()
         formatter.unitStyle = .full
@@ -362,11 +342,9 @@ class MapVC: UIViewController {
 extension MapVC: CLLocationManagerDelegate {
   
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-    
     if status == .authorizedWhenInUse || status == .authorizedAlways {
       activateLocationServices()
     }
-    
   }
   
   func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
@@ -408,7 +386,7 @@ extension MapVC: CLLocationManagerDelegate {
 extension MapVC: MKMapViewDelegate {
   
   func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
+    
     let alert = UIAlertController(title: "Scooter selected", message: "Do you want a route to this scooter?", preferredStyle: .alert)
 
     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
@@ -423,42 +401,23 @@ extension MapVC: MKMapViewDelegate {
   }
   
   func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-    
     if overlay is MKPolygon {
       let polyRenderer = MKPolygonRenderer(overlay: overlay)
       polyRenderer.strokeColor = UIColor.green.withAlphaComponent(0.5)
       polyRenderer.fillColor = UIColor.green.withAlphaComponent(0.2)
       polyRenderer.lineWidth = 2.0
-      
       return polyRenderer
     } else if overlay is MKPolyline {
-      
-//      if overlay.title == "titleForPolyline" {
-//        mapView.removeOverlay(overlay)
-//      }
-      
-//      let overlays = mapView.overlays
-//      for overlay in overlays {
-//        if overlay is MKPolyline {
-//            mapView.removeOverlay(overlay)
-//        }
-//      }
-      
-//      mapView.removeOverlays(mapView.overlays)
-//      produceOverlay()
-      
       let polylineRenderer = MKPolylineRenderer(overlay: overlay)
-      
       polylineRenderer.strokeColor = UIColor.blue.withAlphaComponent(0.8)
       polylineRenderer.lineWidth = 2.0
       return polylineRenderer
     }
-    
     return MKOverlayRenderer()
   }
-  
 }
 
+//  MARK: - TableView Delegate
 extension MapVC: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
