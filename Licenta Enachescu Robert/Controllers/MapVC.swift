@@ -22,17 +22,19 @@ class MapVC: UIViewController {
   @IBOutlet weak var directionsTableView: UITableView!
   
   // MARK: - Properties
-/// Location Properties
+  /// Location Properties
   var locationManager: CLLocationManager?
   var currentLocation: CLLocation?
   
-/// Firestore Properties
+  /// Firestore Properties
   var db: Firestore!
   var users: [User] = []
   var userLocations: [UserLocation] = []
   var scooters:[ScooterModel] = []
   
-/// Geocoding and Directions Properties
+  var selectedScooter:String?
+  
+  /// Geocoding and Directions Properties
   var travelDirections: [String] = []
   var polylineDirections: [MKPolyline] = []
   lazy var geocoder = CLGeocoder()
@@ -52,30 +54,30 @@ class MapVC: UIViewController {
     // Add a new document with a generated ID
     var ref: DocumentReference? = nil
     ref = db.collection("users").addDocument(data: [
-        "first": "Robert",
-        "last": "Test",
-        "born": 1996
+      "first": "Robert",
+      "last": "Test",
+      "born": 1996
     ]) { err in
-        if let err = err {
-            print("Error adding document: \(err)")
-        } else {
-            print("Document added with ID: \(ref!.documentID)")
-        }
+      if let err = err {
+        print("Error adding document: \(err)")
+      } else {
+        print("Document added with ID: \(ref!.documentID)")
+      }
     }
     
     //      MARK: - Read from Database
     ///    Getting all Users
     db.collection("Users").getDocuments() { (querySnapshot, err) in
-        if let err = err {
-            print("Error getting documents: \(err)")
-        } else {
-            for document in querySnapshot!.documents {
-              print("\(document.documentID) => \(document.data())")
-              let user:User = User(data: document.data())!
-              print(user)
-              self.users.append(user)
-            }
+      if let err = err {
+        print("Error getting documents: \(err)")
+      } else {
+        for document in querySnapshot!.documents {
+          print("\(document.documentID) => \(document.data())")
+          let user:User = User(data: document.data())!
+          print(user)
+          self.users.append(user)
         }
+      }
     }
     
     //    MARK: - Setting the map
@@ -100,7 +102,7 @@ class MapVC: UIViewController {
     } else {
       startLocationService()
     }
-        
+    
     directionsTableView.delegate = self
     directionsTableView.dataSource = self
     
@@ -137,7 +139,7 @@ class MapVC: UIViewController {
     let polygon = MKPolygon(coordinates: &points, count: points.count)
     mapView.addOverlay(polygon)
   }
-
+  
   private func loadDirections(destination:CLLocation?) {
     
     if travelDirections.count != 0 {
@@ -161,15 +163,15 @@ class MapVC: UIViewController {
         return
       }
       if let route = response?.routes.first {
-
+        
         /// Delete the old polyline if a new one will be created
         let overlays = self!.mapView.overlays
         for overlay in overlays {
           if overlay is MKPolyline {
             self!.mapView.removeOverlay(overlay)
-            }
+          }
         }
-
+        
         self?.mapView.addOverlay(route.polyline)
         
         let formatter = MKDistanceFormatter()
@@ -223,40 +225,40 @@ class MapVC: UIViewController {
   
   func getAllUserLocationsFromFirestore() {
     db.collection("User Locations").getDocuments() { (querySnapshot, err) in
-        if let err = err {
-            print("Error getting documents: \(err)")
-        } else {
-            for document in querySnapshot!.documents {
-              print("\(document.documentID) => \(document.data())")
-              let userLocation:UserLocation = UserLocation(data: document.data() )!
-              print(userLocation)
-              self.userLocations.append(userLocation)
-            }
-          self.loadScootersFromUsers()
-          self.mapView.addAnnotations(self.scooters)
-          self.mapView.register(ScooterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-          self.mapView.register(ClusterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+      if let err = err {
+        print("Error getting documents: \(err)")
+      } else {
+        for document in querySnapshot!.documents {
+          print("\(document.documentID) => \(document.data())")
+          let userLocation:UserLocation = UserLocation(data: document.data() )!
+          print(userLocation)
+          self.userLocations.append(userLocation)
         }
+        self.loadScootersFromUsers()
+        self.mapView.addAnnotations(self.scooters)
+        self.mapView.register(ScooterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        self.mapView.register(ClusterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+      }
     }
   }
   
   func loadScootersFromUsers() {
-      for userLocation in userLocations {
-        let shouldBeOnTopOfCluster = false
-        
-        let scooter:ScooterModel = ScooterModel(
-          latitude: userLocation.geoPoint!.latitude,
-          longitude: userLocation.geoPoint!.longitude,
-          name: (userLocation.user?.username)!,
-          imageName: "app-icon.png",
-          shouldBeOnTopOfCluster: shouldBeOnTopOfCluster)
-        
-        /// we will only add scooters to our map
-        if (userLocation.user?.scooter)! {
-          scooters.append(scooter)
-        }
-        
+    for userLocation in userLocations {
+      let shouldBeOnTopOfCluster = false
+      
+      let scooter:ScooterModel = ScooterModel(
+        latitude: userLocation.geoPoint!.latitude,
+        longitude: userLocation.geoPoint!.longitude,
+        name: (userLocation.user?.username)!,
+        imageName: "app-icon.png",
+        shouldBeOnTopOfCluster: shouldBeOnTopOfCluster)
+      
+      /// we will only add scooters to our map
+      if (userLocation.user?.scooter)! {
+        scooters.append(scooter)
       }
+      
+    }
   }
   
   func loadScooters() {
@@ -323,6 +325,13 @@ class MapVC: UIViewController {
     return placedEntries
   }
   
+  func showAlertWithOptions(title: String, message: String, handler: @escaping (UIAlertAction) -> Void) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: handler))
+    alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+    self.present(alert, animated: true)
+  }
+  
 }
 
 //  MARK: - CoreLocation Delegate methods
@@ -374,17 +383,30 @@ extension MapVC: MKMapViewDelegate {
   
   func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
     
-    let alert = UIAlertController(title: "Scooter selected", message: "Do you want a route to this scooter?", preferredStyle: .alert)
-
-    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-      let destinationLocation = view.annotation?.coordinate
-      let destination:CLLocation = CLLocation(latitude: destinationLocation!.latitude, longitude: destinationLocation!.longitude)
-      self.loadDirections(destination: destination)
-      mapView.deselectAnnotation(view.annotation, animated: false)
-    }))
-    
-    alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-    self.present(alert, animated: true)
+    if let titleOfView = view.annotation?.title {
+      if titleOfView == selectedScooter {
+        showAlertWithOptions(title: "Scooter selected", message: "Do you want to start the engine of the scooter?", handler: {
+          _ in
+          for user in self.users {
+            if user.username == titleOfView {
+              self.showAlertWithOptions(title: "IT WORKED!", message: "BYE", handler: {_ in})
+              #error("FIX HERE")
+            }
+          }
+        })
+      } else {
+        showAlertWithOptions(title: "Scooter selected", message: "Do you want a route to this scooter?", handler: {
+          _ in
+          let destinationLocation = view.annotation?.coordinate
+          let destination:CLLocation = CLLocation(latitude: destinationLocation!.latitude, longitude: destinationLocation!.longitude)
+          self.loadDirections(destination: destination)
+          mapView.deselectAnnotation(view.annotation, animated: false)
+          if let title = view.annotation?.title {
+            self.selectedScooter = title
+          }
+        })
+      }
+    }
   }
   
   func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
