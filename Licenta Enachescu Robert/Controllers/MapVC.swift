@@ -22,12 +22,17 @@ class MapVC: UIViewController {
   @IBOutlet weak var directionsTableView: UITableView!
   
   // MARK: - Properties
+/// Location Properties
   var locationManager: CLLocationManager?
   var currentLocation: CLLocation?
+  
+/// Firestore Properties
   var db: Firestore!
-  var childName = "Aurelian"
-  var user: User!
+  var users: [User] = []
+  var userLocations: [UserLocation] = []
   var scooters:[ScooterModel] = []
+  
+/// Geocoding and Directions Properties
   var travelDirections: [String] = []
   var polylineDirections: [MKPolyline] = []
   lazy var geocoder = CLGeocoder()
@@ -59,13 +64,16 @@ class MapVC: UIViewController {
     }
     
     //      MARK: - Read from Database
-    ///    Getting the entire Object
+    ///    Getting all Users
     db.collection("Users").getDocuments() { (querySnapshot, err) in
         if let err = err {
             print("Error getting documents: \(err)")
         } else {
             for document in querySnapshot!.documents {
-                print("\(document.documentID) => \(document.data())")
+              print("\(document.documentID) => \(document.data())")
+              let user:User = User(data: document.data())!
+              print(user)
+              self.users.append(user)
             }
         }
     }
@@ -86,10 +94,6 @@ class MapVC: UIViewController {
     locationManager?.requestLocation()
     
     updateUI()
-    
-    mapView.addAnnotations(scooters)
-    mapView.register(ScooterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-    mapView.register(ClusterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
     
     if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
       activateLocationServices()
@@ -213,8 +217,46 @@ class MapVC: UIViewController {
   }
   
   func updateUI() {
-    loadScooters()
+    getAllUserLocationsFromFirestore()
     printAddress()
+  }
+  
+  func getAllUserLocationsFromFirestore() {
+    db.collection("User Locations").getDocuments() { (querySnapshot, err) in
+        if let err = err {
+            print("Error getting documents: \(err)")
+        } else {
+            for document in querySnapshot!.documents {
+              print("\(document.documentID) => \(document.data())")
+              let userLocation:UserLocation = UserLocation(data: document.data() )!
+              print(userLocation)
+              self.userLocations.append(userLocation)
+            }
+          self.loadScootersFromUsers()
+          self.mapView.addAnnotations(self.scooters)
+          self.mapView.register(ScooterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+          self.mapView.register(ClusterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+        }
+    }
+  }
+  
+  func loadScootersFromUsers() {
+      for userLocation in userLocations {
+        let shouldBeOnTopOfCluster = false
+        
+        let scooter:ScooterModel = ScooterModel(
+          latitude: userLocation.geoPoint!.latitude,
+          longitude: userLocation.geoPoint!.longitude,
+          name: (userLocation.user?.username)!,
+          imageName: "app-icon.png",
+          shouldBeOnTopOfCluster: shouldBeOnTopOfCluster)
+        
+        /// we will only add scooters to our map
+        if (userLocation.user?.scooter)! {
+          scooters.append(scooter)
+        }
+        
+      }
   }
   
   func loadScooters() {

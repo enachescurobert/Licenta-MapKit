@@ -3,7 +3,18 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "closure #1 in MapVC.loadDirections(destination:):MapVC.swift">
+         contextName = "UserLocation.init(data:):UserLocation.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #3 in MapVC.viewDidLoad():MapVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "document.data()">
+            </PersistentString>
+            <PersistentString
+               value = "document.data()[&quot;user&quot;]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "MapVC.mapView(_:rendererFor:):MapVC.swift">
@@ -12,6 +23,9 @@
                value = "mapView.overlays">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in MapVC.loadDirections(destination:):MapVC.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
