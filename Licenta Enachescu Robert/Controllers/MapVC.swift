@@ -25,6 +25,7 @@ class MapVC: UIViewController {
   /// Location Properties
   var locationManager: CLLocationManager?
   var currentLocation: CLLocation?
+  let userDefaults = UserDefaults.standard
   
   /// Firestore Properties
   var db: Firestore!
@@ -40,9 +41,12 @@ class MapVC: UIViewController {
   lazy var geocoder = CLGeocoder()
   var voice:AVSpeechSynthesizer?
   
+  //  MARK: - Lifecycle Methods
   override func viewDidLoad() {
     super.viewDidLoad()
     self.navigationItem.hidesBackButton = true
+    
+    self.userDefaults.set("No active scooter", forKey: "ACTIVE_SCOOTER")
     
     // [START setup]
     let settings = FirestoreSettings()
@@ -392,27 +396,60 @@ extension MapVC: MKMapViewDelegate {
     
     if let titleOfView = view.annotation?.title {
       if titleOfView == selectedScooter {
-        showAlertWithOptions(title: "Scooter selected", message: "Do you want to start the engine of the scooter?", handler: {
-          _ in
-          for user in self.users {
-            if user.username == titleOfView {
-              
-              self.db.collection("User Locations").document(user.user_id).updateData([
-                "user.engineStartedAt": FieldValue.serverTimestamp(),
-                "user.engineStarted" : true]
-              ) { err in
-                if let err = err {
-                  print("Error updating document: \(err)")
-                  self.showAlertWithOnlyConfirmationOption(title: "Error!", message: "Please try again later.")
-                } else {
-                  print("Document successfully updated")
-                  self.showAlertWithOnlyConfirmationOption(title: "Engine - Started", message: "Enjoy your ride!")
+        
+        if userDefaults.string(forKey: "ACTIVE_SCOOTER") == "No active scooter" {
+          
+          showAlertWithOptions(title: "Scooter selected", message: "Do you want to START the engine of the scooter?", handler: {
+            _ in
+            for user in self.users {
+              if user.username == titleOfView {
+                
+                self.db.collection("User Locations").document(user.user_id).updateData([
+                  "user.engineStartedAt": FieldValue.serverTimestamp(),
+                  "user.engineStarted" : true]
+                ) { err in
+                  if let err = err {
+                    print("Error updating document: \(err)")
+                    self.showAlertWithOnlyConfirmationOption(title: "Error!", message: "Please try again later.")
+                  } else {
+                    print("Document successfully updated")
+                    self.showAlertWithOnlyConfirmationOption(title: "Engine - Started", message: "Enjoy your ride!")
+                    self.userDefaults.set(user.username, forKey: "ACTIVE_SCOOTER")
+                    #warning("START THE TIMER")
+                  }
                 }
+                
               }
-              
             }
-          }
-        })
+          })
+          
+        } else {
+          
+          showAlertWithOptions(title: "Scooter selected", message: "Do you want to STOP the engine of the scooter?", handler: {
+            _ in
+            for user in self.users {
+              if user.username == titleOfView {
+                
+                self.db.collection("User Locations").document(user.user_id).updateData([
+                  "user.engineStoppedAt": FieldValue.serverTimestamp(),
+                  "user.engineStarted" : false]
+                ) { err in
+                  if let err = err {
+                    print("Error updating document: \(err)")
+                    self.showAlertWithOnlyConfirmationOption(title: "Error!", message: "Please try again later.")
+                  } else {
+                    print("Document successfully updated")
+                    self.showAlertWithOnlyConfirmationOption(title: "Engine - Stopped", message: "Thank you for choosing our app.")
+                    self.userDefaults.set("No active scooter", forKey: "ACTIVE_SCOOTER")
+                    #warning("STOP THE TIMER")
+                  }
+                }
+                
+              }
+            }
+          })
+        }
+        
       } else {
         showAlertWithOptions(title: "Scooter selected", message: "Do you want a route to this scooter?", handler: {
           _ in
