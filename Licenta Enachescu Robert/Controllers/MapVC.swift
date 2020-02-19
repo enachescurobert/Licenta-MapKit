@@ -22,10 +22,12 @@ class MapVC: UIViewController {
   @IBOutlet weak var directionsTableView: UITableView!
   
   // MARK: - Properties
+  let userDefaults = UserDefaults.standard
+  let parkingCodes:[String] = ["123456", "678900", "135790", "246800", "142530"]
+  
   /// Location Properties
   var locationManager: CLLocationManager?
   var currentLocation: CLLocation?
-  let userDefaults = UserDefaults.standard
   
   /// Firestore Properties
   var db: Firestore!
