@@ -61,7 +61,7 @@ class MapVC: UIViewController {
     db = Firestore.firestore()
     
     //      MARK: - Upload to Firebase
-    #warning("CREATE USER AT LOGIN")
+    #warning("CREATE USER AT REGISTER")
     // Add a new document with a generated ID
     var ref: DocumentReference? = nil
     ref = db.collection("users").addDocument(data: [
@@ -372,7 +372,8 @@ class MapVC: UIViewController {
         print("Document successfully updated")
         self.showAlertWithOnlyConfirmationOption(title: "Engine - Stopped", message: "Thank you for choosing our app.")
         self.userDefaults.set("No active scooter", forKey: "ACTIVE_SCOOTER")
-        self.rideInfoView.isHidden = true
+        
+//        self.rideInfoView.isHidden = true
         #warning("STOP THE TIMER")
       }
     }
@@ -450,7 +451,11 @@ extension MapVC: MKMapViewDelegate {
                     print("Document successfully updated")
                     self.showAlertWithOnlyConfirmationOption(title: "Engine - Started", message: "Enjoy your ride!")
                     self.userDefaults.set(user.username, forKey: "ACTIVE_SCOOTER")
-                    self.rideInfoView.isHidden = false
+                    if let parkingCode = self.parkingCodes.randomElement() {
+                      self.parkingCodeLbl.text = parkingCode
+                    }
+                    
+//                    self.rideInfoView.isHidden = false
                     #warning("START THE TIMER")
                   }
                 }
