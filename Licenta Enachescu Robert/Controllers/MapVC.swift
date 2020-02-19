@@ -20,6 +20,10 @@ class MapVC: UIViewController {
   // MARK: - IBOutlets
   @IBOutlet weak var mapView: MKMapView!
   @IBOutlet weak var directionsTableView: UITableView!
+  @IBOutlet weak var rideInfoView: UIView!
+  @IBOutlet weak var timePassedLbl: UILabel!
+  @IBOutlet weak var totalLbl: UILabel!
+  @IBOutlet weak var parkingCodeLbl: UILabel!
   
   // MARK: - Properties
   let userDefaults = UserDefaults.standard
@@ -205,6 +209,11 @@ class MapVC: UIViewController {
   @IBAction func goToUserLocation(_ sender: Any) {
     mapView.setCenter(mapView?.userLocation.coordinate ?? CLLocationCoordinate2DMake(44.410, 26.100), animated: true)
   }
+  
+  @IBAction func stopTimerPressed(_ sender: Any) {
+    #warning("Stop Timer Logic")
+  }
+  
   
   // MARK: - Methods
   /// We use requestAlwaysAuthorization instead of requestWhenInUseAuthorization
@@ -417,6 +426,7 @@ extension MapVC: MKMapViewDelegate {
                     print("Document successfully updated")
                     self.showAlertWithOnlyConfirmationOption(title: "Engine - Started", message: "Enjoy your ride!")
                     self.userDefaults.set(user.username, forKey: "ACTIVE_SCOOTER")
+                    self.rideInfoView.isHidden = false
                     #warning("START THE TIMER")
                   }
                 }
@@ -443,6 +453,7 @@ extension MapVC: MKMapViewDelegate {
                     print("Document successfully updated")
                     self.showAlertWithOnlyConfirmationOption(title: "Engine - Stopped", message: "Thank you for choosing our app.")
                     self.userDefaults.set("No active scooter", forKey: "ACTIVE_SCOOTER")
+                    self.rideInfoView.isHidden = true
                     #warning("STOP THE TIMER")
                   }
                 }

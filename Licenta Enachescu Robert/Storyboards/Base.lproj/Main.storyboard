@@ -183,7 +183,7 @@
                                     <action selector="goToUserLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="14y-i3-Dva"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4a-mM-ia4" userLabel="Info About Rented Scooter">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4a-mM-ia4" userLabel="Info About Rented Scooter">
                                 <rect key="frame" x="48" y="88" width="331" height="150"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time passed:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYG-1l-eZn">
@@ -204,6 +204,9 @@
                                         <state key="normal" title="STOP">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="stopTimerPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9MD-0J-Dkn"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price: 0.5$ / 1 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uGO-fg-tLI">
                                         <rect key="frame" x="10" y="41" width="158.5" height="21"/>
@@ -314,6 +317,10 @@
                     <connections>
                         <outlet property="directionsTableView" destination="nlo-2B-EU8" id="ZIb-f2-vvZ"/>
                         <outlet property="mapView" destination="xnt-Mn-S5J" id="Lxu-GR-1KR"/>
+                        <outlet property="parkingCodeLbl" destination="DXM-Dq-gNc" id="k8d-aG-C7d"/>
+                        <outlet property="rideInfoView" destination="O4a-mM-ia4" id="qi9-Dv-eXg"/>
+                        <outlet property="timePassedLbl" destination="6vE-xm-9Vk" id="o7o-Am-9RK"/>
+                        <outlet property="totalLbl" destination="OtT-cb-GPw" id="2tz-ZK-TQF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
