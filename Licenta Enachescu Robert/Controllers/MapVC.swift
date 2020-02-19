@@ -61,6 +61,7 @@ class MapVC: UIViewController {
     db = Firestore.firestore()
     
     //      MARK: - Upload to Firebase
+    #warning("CREATE USER AT LOGIN")
     // Add a new document with a generated ID
     var ref: DocumentReference? = nil
     ref = db.collection("users").addDocument(data: [
@@ -212,6 +213,11 @@ class MapVC: UIViewController {
   
   @IBAction func stopTimerPressed(_ sender: Any) {
     #warning("Stop Timer Logic")
+    for user in users {
+      if user.username == selectedScooter {
+        stopTheEngineOf(user_id: user.user_id)
+      }
+    }
   }
   
   
@@ -354,6 +360,24 @@ class MapVC: UIViewController {
     self.present(alert, animated: true)
   }
   
+  func stopTheEngineOf(user_id: String) {
+    self.db.collection("User Locations").document(user_id).updateData([
+      "user.engineStoppedAt": FieldValue.serverTimestamp(),
+      "user.engineStarted" : false]
+    ) { err in
+      if let err = err {
+        print("Error updating document: \(err)")
+        self.showAlertWithOnlyConfirmationOption(title: "Error!", message: "Please try again later.")
+      } else {
+        print("Document successfully updated")
+        self.showAlertWithOnlyConfirmationOption(title: "Engine - Stopped", message: "Thank you for choosing our app.")
+        self.userDefaults.set("No active scooter", forKey: "ACTIVE_SCOOTER")
+        self.rideInfoView.isHidden = true
+        #warning("STOP THE TIMER")
+      }
+    }
+  }
+  
 }
 
 //  MARK: - CoreLocation Delegate methods
@@ -442,21 +466,7 @@ extension MapVC: MKMapViewDelegate {
             for user in self.users {
               if user.username == titleOfView {
                 
-                self.db.collection("User Locations").document(user.user_id).updateData([
-                  "user.engineStoppedAt": FieldValue.serverTimestamp(),
-                  "user.engineStarted" : false]
-                ) { err in
-                  if let err = err {
-                    print("Error updating document: \(err)")
-                    self.showAlertWithOnlyConfirmationOption(title: "Error!", message: "Please try again later.")
-                  } else {
-                    print("Document successfully updated")
-                    self.showAlertWithOnlyConfirmationOption(title: "Engine - Stopped", message: "Thank you for choosing our app.")
-                    self.userDefaults.set("No active scooter", forKey: "ACTIVE_SCOOTER")
-                    self.rideInfoView.isHidden = true
-                    #warning("STOP THE TIMER")
-                  }
-                }
+                self.stopTheEngineOf(user_id: user.user_id)
                 
               }
             }
