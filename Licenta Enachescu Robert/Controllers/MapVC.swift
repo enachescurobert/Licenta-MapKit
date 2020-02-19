@@ -61,20 +61,7 @@ class MapVC: UIViewController {
     db = Firestore.firestore()
     
     //      MARK: - Upload to Firebase
-    #warning("CREATE USER AT REGISTER")
-    // Add a new document with a generated ID
-    var ref: DocumentReference? = nil
-    ref = db.collection("users").addDocument(data: [
-      "first": "Robert",
-      "last": "Test",
-      "born": 1996
-    ]) { err in
-      if let err = err {
-        print("Error adding document: \(err)")
-      } else {
-        print("Document added with ID: \(ref!.documentID)")
-      }
-    }
+    #warning("CREATE USER IN RegisterVC")
     
     //      MARK: - Read from Database
     ///    Getting all Users
