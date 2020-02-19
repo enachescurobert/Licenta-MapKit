@@ -14,12 +14,14 @@ class ScooterModel: NSObject {
   
   let location: CLLocation
   let name: String
+  let user_id: String
   let imageName: String
   let shouldBeOnTopOfCluster: Bool
   
-  init(latitude: Double, longitude: Double, name: String, imageName: String, shouldBeOnTopOfCluster: Bool) {
+  init(latitude: Double, longitude: Double, name: String, user_id: String, imageName: String, shouldBeOnTopOfCluster: Bool) {
     self.location = CLLocation(latitude: latitude, longitude: longitude)
     self.name = name
+    self.user_id = user_id
     self.imageName = imageName
     self.shouldBeOnTopOfCluster = shouldBeOnTopOfCluster
   }

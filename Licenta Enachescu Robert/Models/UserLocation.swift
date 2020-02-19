@@ -16,18 +16,23 @@ struct UserLocation {
   
   let geoPoint: GeoPoint?
   let user: User?
+  let user_id: String?
   
-  init(geoPoint: GeoPoint, user: User) {
+  init(geoPoint: GeoPoint, user: User, user_id: String) {
     self.geoPoint = geoPoint
     self.user = user
+    self.user_id = user_id
   }
   
-  init?(data: [String: Any]) {
+  init?(document: QueryDocumentSnapshot) {
+    let data = document.data()
     let geoPoint = data["geoPoint"] as? GeoPoint
     let user = data["user"] as? [String : Any]
+    let user_id = document.documentID
 
     self.geoPoint = geoPoint
     self.user = User(data: user!)
+    self.user_id = user_id
 
   }
   

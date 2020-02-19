@@ -230,7 +230,7 @@ class MapVC: UIViewController {
       } else {
         for document in querySnapshot!.documents {
           print("\(document.documentID) => \(document.data())")
-          let userLocation:UserLocation = UserLocation(data: document.data() )!
+          let userLocation:UserLocation = UserLocation(document: document)!
           print(userLocation)
           self.userLocations.append(userLocation)
         }
@@ -250,6 +250,7 @@ class MapVC: UIViewController {
         latitude: userLocation.geoPoint!.latitude,
         longitude: userLocation.geoPoint!.longitude,
         name: (userLocation.user?.username)!,
+        user_id: userLocation.user_id!,
         imageName: "app-icon.png",
         shouldBeOnTopOfCluster: shouldBeOnTopOfCluster)
       
@@ -283,7 +284,7 @@ class MapVC: UIViewController {
       if property["shouldBeOnTopOfCluster"] != nil {
         shouldBeOnTopOfCluster = property["shouldBeOnTopOfCluster"] as? Bool ?? false
       }
-      let scooter = ScooterModel(latitude: latitude.doubleValue, longitude: longitude.doubleValue, name: name, imageName: image, shouldBeOnTopOfCluster: shouldBeOnTopOfCluster)
+      let scooter = ScooterModel(latitude: latitude.doubleValue, longitude: longitude.doubleValue, name: name, user_id: "test", imageName: image, shouldBeOnTopOfCluster: shouldBeOnTopOfCluster)
       scooters.append(scooter)
     }
   }
@@ -323,6 +324,12 @@ class MapVC: UIViewController {
       print("error reading plist")
     }
     return placedEntries
+  }
+  
+  func showAlertWithOnlyConfirmationOption(title: String, message: String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+    self.present(alert, animated: true)
   }
   
   func showAlertWithOptions(title: String, message: String, handler: @escaping (UIAlertAction) -> Void) {
@@ -389,8 +396,20 @@ extension MapVC: MKMapViewDelegate {
           _ in
           for user in self.users {
             if user.username == titleOfView {
-              self.showAlertWithOptions(title: "IT WORKED!", message: "BYE", handler: {_ in})
-              #error("FIX HERE")
+              
+              self.db.collection("User Locations").document(user.user_id).updateData([
+                "user.engineStartedAt": FieldValue.serverTimestamp(),
+                "user.engineStarted" : true]
+              ) { err in
+                if let err = err {
+                  print("Error updating document: \(err)")
+                  self.showAlertWithOnlyConfirmationOption(title: "Error!", message: "Please try again later.")
+                } else {
+                  print("Document successfully updated")
+                  self.showAlertWithOnlyConfirmationOption(title: "Engine - Started", message: "Enjoy your ride!")
+                }
+              }
+              
             }
           }
         })
